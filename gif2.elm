@@ -47,11 +47,89 @@ generatePlate =
     Square "Pion" "Conard",
     Square "Null" "Null",
     Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
     Square "Pion" "Conard"
     ],
     [ Square "Roi" "Conard",
     Square "Pion" "Conard",
     Square "Null" "Null",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard"
+    ],
+    [ Square "Roi" "Conard",
+    Square "Pion" "Conard",
+    Square "Null" "Null",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard"
+    ],
+    [ Square "Roi" "Conard",
+    Square "Pion" "Conard",
+    Square "Null" "Null",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard"
+    ],
+    [ Square "Roi" "Conard",
+    Square "Pion" "Conard",
+    Square "Null" "Null",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard"
+    ],
+    [ Square "Roi" "Conard",
+    Square "Pion" "Conard",
+    Square "Null" "Null",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard"
+    ],
+    [ Square "Roi" "Conard",
+    Square "Pion" "Conard",
+    Square "Null" "Null",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard"
+    ],
+    [ Square "Roi" "Conard",
+    Square "Pion" "Conard",
+    Square "Null" "Null",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard"
+    ],
+    [ Square "Roi" "Conard",
+    Square "Pion" "Conard",
+    Square "Null" "Null",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
+    Square "Pion" "Conard",
     Square "Pion" "Conard",
     Square "Pion" "Conard"
     ]
@@ -104,27 +182,19 @@ view model =
     , br [] []
     , button [ onClick UpdateStatus ] [ text "Get Status" ]
     , p[][text model.partyStatus]
-    , table[] [(viewPlate model.plate)]
+    , table[] (List.map viewPlate model.plate)
     ]
 
 
---iteratePlate List (List String) -> List String
---iteratePlate plate =
-
-viewPlate : List (List Square) -> Html Msg
+viewPlate : List Square -> Html Msg
 viewPlate plate = 
-   viewPlate (List.map viewSquare List.head::plate)
-
-iteratePlate : List(List(Html Msg)) -> Html Msg
-iteratePlate itPlate = 
-  iteratePlate (List.map iteratePlate List.head::itPlate)
-
-  
+    tr[](List.map viewSquare plate)
+    
 viewSquare : Square -> Html Msg
 viewSquare {piece , player} =
-  div[]
+    td[]
     [
-      text piece, text player
+      text piece
     ]
 
 
