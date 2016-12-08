@@ -8,7 +8,6 @@ import Http
 import Json.Decode as Decode
 
 
-
 main =
   Html.program
     { init = init "cats"
@@ -176,11 +175,11 @@ view : Model -> Html Msg
 view model =
   div []
     [ h2 [] [text model.topic]
-    , button [ onClick MorePlease ] [ text "More Please!" ] -- Quand on clique sur le bouton, on fait appel a MorePlease qui va ré-effectuer la même procédure que NewGif
+    , button [ onClick MorePlease,  class "btn btn-default"] [ text "More Please!" ] -- Quand on clique sur le bouton, on fait appel a MorePlease qui va ré-effectuer la même procédure que NewGif
     , br [] []
     , img [src model.gifUrl] []
     , br [] []
-    , button [ onClick UpdateStatus ] [ text "Get Status" ]
+    , button [ onClick UpdateStatus,  class "btn btn-default" ] [ text "Get Status" ]
     , p[][text model.partyStatus]
     , table[] (List.indexedMap viewPlate model.plate)
     ]
@@ -189,7 +188,7 @@ view model =
 viewPlate : Int -> List Square -> Html Msg
 viewPlate indexLigne plate = 
   case indexLigne of 
-    0 -> tr[id (toString indexLigne), class "corner"](List.indexedMap viewSquare plate)
+    0 -> tr[id (toString indexLigne), class "table"](List.indexedMap viewSquare plate)
     _ -> tr[id (toString indexLigne)](List.indexedMap viewSquare plate)
     
 viewSquare : int -> Square -> Html Msg

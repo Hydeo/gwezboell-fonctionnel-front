@@ -1,0 +1,1 @@
+elm-make Gwezboell-Sources.elm --output src/Gwezboell-Elm.js
