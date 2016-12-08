@@ -188,16 +188,24 @@ view model =
 viewPlate : Int -> List Square -> Html Msg
 viewPlate indexLigne plate = 
   case indexLigne of 
-    0 -> tr[id (toString indexLigne), class "table"](List.indexedMap viewSquare plate)
+    0 -> tr[id (toString indexLigne), class "corner"](List.indexedMap viewSquare plate)
     _ -> tr[id (toString indexLigne)](List.indexedMap viewSquare plate)
     
-viewSquare : int -> Square -> Html Msg
+viewSquare : Int -> Square -> Html Msg
 viewSquare indexRow {piece , player} =
     td[id (toString indexRow)]
     [
       text piece
     ]
 
+viewSquare2 : Int -> Int -> List Square -> Html Msg
+viewSquare2 indexRow indexLigne listSquare =
+  case listSquare of 
+    Nothing a-> td[id (toString indexRow), class (toString indexLigne)]
+      [
+        text piece
+      ]
+    Maybe a -> td[id (toString indexRow), class (toString indexLigne)] (viewSquare2 indexRow-1 indexLigne List.tail::listSquare)
 
 
 
