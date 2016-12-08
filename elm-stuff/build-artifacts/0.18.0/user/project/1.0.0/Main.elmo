@@ -25,23 +25,52 @@ var _user$project$Main$decodePartyStatus = A2(
 var _user$project$Main$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$none;
 };
-var _user$project$Main$viewSquare = function (_p0) {
-	var _p1 = _p0;
-	return A2(
-		_elm_lang$html$Html$td,
-		{ctor: '[]'},
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html$text(_p1.piece),
-			_1: {ctor: '[]'}
-		});
-};
-var _user$project$Main$viewPlate = function (plate) {
-	return A2(
-		_elm_lang$html$Html$tr,
-		{ctor: '[]'},
-		A2(_elm_lang$core$List$map, _user$project$Main$viewSquare, plate));
-};
+var _user$project$Main$viewSquare = F2(
+	function (indexRow, _p0) {
+		var _p1 = _p0;
+		return A2(
+			_elm_lang$html$Html$td,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$id(
+					_elm_lang$core$Basics$toString(indexRow)),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text(_p1.piece),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$Main$viewPlate = F2(
+	function (indexLigne, plate) {
+		var _p2 = indexLigne;
+		if (_p2 === 0) {
+			return A2(
+				_elm_lang$html$Html$tr,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$id(
+						_elm_lang$core$Basics$toString(indexLigne)),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('corner'),
+						_1: {ctor: '[]'}
+					}
+				},
+				A2(_elm_lang$core$List$indexedMap, _user$project$Main$viewSquare, plate));
+		} else {
+			return A2(
+				_elm_lang$html$Html$tr,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$id(
+						_elm_lang$core$Basics$toString(indexLigne)),
+					_1: {ctor: '[]'}
+				},
+				A2(_elm_lang$core$List$indexedMap, _user$project$Main$viewSquare, plate));
+		}
+	});
 var _user$project$Main$Model = F4(
 	function (a, b, c, d) {
 		return {topic: a, gifUrl: b, partyStatus: c, plate: d};
@@ -442,8 +471,8 @@ var _user$project$Main$init = function (topic) {
 };
 var _user$project$Main$update = F2(
 	function (msg, model) {
-		var _p2 = msg;
-		switch (_p2.ctor) {
+		var _p3 = msg;
+		switch (_p3.ctor) {
 			case 'MorePlease':
 				return {
 					ctor: '_Tuple2',
@@ -451,10 +480,10 @@ var _user$project$Main$update = F2(
 					_1: _user$project$Main$getRandomGif(model.topic)
 				};
 			case 'NewGif':
-				if (_p2._0.ctor === 'Ok') {
+				if (_p3._0.ctor === 'Ok') {
 					return {
 						ctor: '_Tuple2',
-						_0: A4(_user$project$Main$Model, model.topic, _p2._0._0, model.partyStatus, model.plate),
+						_0: A4(_user$project$Main$Model, model.topic, _p3._0._0, model.partyStatus, model.plate),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
@@ -467,10 +496,10 @@ var _user$project$Main$update = F2(
 					_1: A2(_user$project$Main$getPartyStatus, 'Conard', 'blanc')
 				};
 			default:
-				if (_p2._0.ctor === 'Ok') {
+				if (_p3._0.ctor === 'Ok') {
 					return {
 						ctor: '_Tuple2',
-						_0: A4(_user$project$Main$Model, model.topic, model.gifUrl, _p2._0._0, model.plate),
+						_0: A4(_user$project$Main$Model, model.topic, model.gifUrl, _p3._0._0, model.plate),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
@@ -558,7 +587,7 @@ var _user$project$Main$view = function (model) {
 										_0: A2(
 											_elm_lang$html$Html$table,
 											{ctor: '[]'},
-											A2(_elm_lang$core$List$map, _user$project$Main$viewPlate, model.plate)),
+											A2(_elm_lang$core$List$indexedMap, _user$project$Main$viewPlate, model.plate)),
 										_1: {ctor: '[]'}
 									}
 								}

@@ -36,7 +36,7 @@ type alias Square =
 
 init : String -> (Model, Cmd Msg)
 init topic =
-  ( Model topic "waiting.gif" "lol" generatePlate -- On définit le model lors du premier chargement de la page
+  ( Model topic "waiting.gif" "lol" generatePlate   -- On définit le model lors du premier chargement de la page
   , getRandomGif topic -- Et on charge tout de suite un premier gif
   )
 
@@ -153,7 +153,7 @@ update msg model =
       (model, getRandomGif model.topic)
 
     NewGif (Ok newUrl) ->
-      (Model model.topic newUrl model.partyStatus model.plate, Cmd.none)
+      (Model model.topic newUrl model.partyStatus model.plate , Cmd.none)
 
     NewGif (Err _) ->
       (model, Cmd.none)
@@ -182,17 +182,19 @@ view model =
     , br [] []
     , button [ onClick UpdateStatus ] [ text "Get Status" ]
     , p[][text model.partyStatus]
-    , table[] (List.map viewPlate model.plate)
+    , table[] (List.indexedMap viewPlate model.plate)
     ]
 
 
-viewPlate : List Square -> Html Msg
-viewPlate plate = 
-    tr[](List.map viewSquare plate)
+viewPlate : Int -> List Square -> Html Msg
+viewPlate indexLigne plate = 
+  case indexLigne of 
+    0 -> tr[id (toString indexLigne), class "corner"](List.indexedMap viewSquare plate)
+    _ -> tr[id (toString indexLigne)](List.indexedMap viewSquare plate)
     
-viewSquare : Square -> Html Msg
-viewSquare {piece , player} =
-    td[]
+viewSquare : int -> Square -> Html Msg
+viewSquare indexRow {piece , player} =
+    td[id (toString indexRow)]
     [
       text piece
     ]
