@@ -42,95 +42,95 @@ init topic =
 generatePlate : List (List Square)
 generatePlate = 
   [
-   [ Square "Roi" "Conard",
-    Square "Pion" "Conard",
+   [ Square "Null" "Conard",
+    Square "Null" "Conard",
     Square "Null" "Null",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard"
+    Square "PionN" "Conard",
+    Square "PionN" "Conard",
+    Square "PionN" "Conard",
+    Square "Null" "Conard",
+    Square "Null" "Conard",
+    Square "Null" "Conard"
     ],
-    [ Square "Roi" "Conard",
-    Square "Pion" "Conard",
+    [ Square "Null" "Conard",
+    Square "Null" "Conard",
     Square "Null" "Null",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard"
+    Square "Null" "Conard",
+    Square "PionN" "Conard",
+    Square "Null" "Conard",
+    Square "Null" "Conard",
+    Square "Null" "Conard",
+    Square "Null" "Conard"
     ],
-    [ Square "Roi" "Conard",
-    Square "Pion" "Conard",
+    [ Square "Null" "Conard",
+    Square "Null" "Conard",
     Square "Null" "Null",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard"
+    Square "Null" "Conard",
+    Square "PionB" "Conard",
+    Square "Null" "Conard",
+    Square "Null" "Conard",
+    Square "Null" "Conard",
+    Square "Null" "Conard"
     ],
-    [ Square "Roi" "Conard",
-    Square "Pion" "Conard",
+    [ Square "PionN" "Conard",
+    Square "Null" "Conard",
     Square "Null" "Null",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard"
+    Square "Null" "Conard",
+    Square "PionB" "Conard",
+    Square "Null" "Conard",
+    Square "Null" "Conard",
+    Square "Null" "Conard",
+    Square "PionN" "Conard"
     ],
-    [ Square "Roi" "Conard",
-    Square "Pion" "Conard",
-    Square "Null" "Null",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard"
+    [ Square "PionN" "Conard",
+    Square "PionN" "Conard",
+    Square "PionB" "Null",
+    Square "PionB" "Conard",
+    Square "RoiB" "Conard",
+    Square "PionB" "Conard",
+    Square "PionB" "Conard",
+    Square "PionN" "Conard",
+    Square "PionN" "Conard"
     ],
-    [ Square "Roi" "Conard",
-    Square "Pion" "Conard",
+    [ Square "PionN" "Conard",
+    Square "Null" "Conard",
     Square "Null" "Null",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard"
+    Square "Null" "Conard",
+    Square "PionB" "Conard",
+    Square "Null" "Conard",
+    Square "Null" "Conard",
+    Square "Null" "Conard",
+    Square "PionN" "Conard"
     ],
-    [ Square "Roi" "Conard",
-    Square "Pion" "Conard",
+    [ Square "Null" "Conard",
+    Square "Null" "Conard",
     Square "Null" "Null",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard"
+    Square "Null" "Conard",
+    Square "PionB" "Conard",
+    Square "Null" "Conard",
+    Square "Null" "Conard",
+    Square "Null" "Conard",
+    Square "Null" "Conard"
     ],
-    [ Square "Roi" "Conard",
-    Square "Pion" "Conard",
+    [ Square "Null" "Conard",
+    Square "Null" "Conard",
     Square "Null" "Null",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard"
+    Square "Null" "Conard",
+    Square "PionN" "Conard",
+    Square "Null" "Conard",
+    Square "Null" "Conard",
+    Square "Null" "Conard",
+    Square "Null" "Conard"
     ],
-    [ Square "Roi" "Conard",
-    Square "Pion" "Conard",
+    [ Square "Null" "Conard",
+    Square "Null" "Conard",
     Square "Null" "Null",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard",
-    Square "Pion" "Conard"
+    Square "PionN" "Conard",
+    Square "PionN" "Conard",
+    Square "PionN" "Conard",
+    Square "Null" "Conard",
+    Square "Null" "Conard",
+    Square "Null" "Conard"
     ]
   ]
 
@@ -142,6 +142,7 @@ type Msg
   | NewGif (Result Http.Error String)
   | UpdateStatus
   | NewPartyStatus (Result Http.Error String)
+  | SquareClick Int Int
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -157,7 +158,7 @@ update msg model =
     NewGif (Err _) ->
       (model, Cmd.none)
 
-    -- STATUS
+    -- STATUS PARTY
     UpdateStatus ->
       (model, getPartyStatus "Conard" "blanc" )
 
@@ -166,6 +167,10 @@ update msg model =
 
     NewPartyStatus (Err _) ->
       (model, Cmd.none)
+
+    -- ONCLICK 
+    SquareClick indexLine indexRow ->
+      (Model model.topic model.gifUrl ((toString indexLine)++"-"++(toString indexRow)) model.plate, Cmd.none)
 
 
 -- VIEW
@@ -186,32 +191,32 @@ view model =
 
 
 viewPlate : Int -> List Square -> Html Msg
-viewPlate indexLigne plate = 
-  case indexLigne of 
-    0 -> tr[id (toString indexLigne), class "corner"](List.indexedMap viewSquare plate)
-    _ -> tr[id (toString indexLigne)](List.indexedMap viewSquare plate)
+viewPlate indexLine plate = 
+  tr[id (toString indexLine)](List.indexedMap (viewSquare indexLine) plate )
+
     
-viewSquare : Int -> Square -> Html Msg
-viewSquare indexRow {piece , player} =
-    td[id (toString indexRow)]
-    [
-      text piece
-    ]
-
-viewSquare2 : Int -> Int -> List Square -> Html Msg
-viewSquare2 indexRow indexLigne listSquare =
-  case listSquare of 
-    Nothing a-> td[id (toString indexRow), class (toString indexLigne)]
+viewSquare : Int -> Int -> Square -> Html Msg
+viewSquare indexRow indexLine {piece , player} =
+  if ((indexRow == 0 || indexRow == 8) && (indexLine == 0 || indexLine == 8)) then
+    if (piece /= "Null") then
+      td[id ((toString indexRow)++(toString indexLine)), class "corner", onClick (SquareClick indexRow indexLine)]
       [
-        text piece
+        img [src ("img/"++piece++".png")][]
       ]
-    Maybe a -> td[id (toString indexRow), class (toString indexLigne)] (viewSquare2 indexRow-1 indexLigne List.tail::listSquare)
-
-
-
+    else
+      td[id ((toString indexRow)++(toString indexLine)), class "corner", onClick (SquareClick indexRow indexLine)]
+      []
+  else
+    if (piece /= "Null") then
+      td[id ((toString indexRow)++(toString indexLine)), class "floor", onClick (SquareClick indexRow indexLine)]
+      [
+        img [src ("img/"++piece++".png")][]
+      ]
+    else
+      td[id ((toString indexRow)++(toString indexLine)), class "floor", onClick (SquareClick indexRow indexLine)]
+      []
   
 -- SUBSCRIPTIONS --------------------
-
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
@@ -232,7 +237,6 @@ getPartyStatus playerName team =
 decodePartyStatus : Decode.Decoder String  -- Decode Json qui permet de récupèrer un élement (image_url dans data) dans du JSON
 decodePartyStatus =
   Decode.at ["data", "Plate"] Decode.string
-
 
 getRandomGif : String -> Cmd Msg 
 getRandomGif topic =

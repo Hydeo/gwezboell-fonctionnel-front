@@ -1,0 +1,14 @@
+.floor{
+	background-size: 100% 100%;
+	background-color: green;
+}
+
+.corner{
+	background-size: 100% 100%;
+	background-color: red;
+}
+
+td{
+  width:64px;
+  height:64px;
+}
