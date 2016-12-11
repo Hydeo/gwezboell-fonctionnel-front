@@ -1,11 +1,12 @@
 .floor{
 	background-size: 100% 100%;
-	background-color: green;
+	/*background-color: green;*/
+	background-image: url(../img/grass3.png)
 }
 
 .corner{
 	background-size: 100% 100%;
-	background-color: red;
+	background-image: url(../img/out.png)
 }
 
 td{

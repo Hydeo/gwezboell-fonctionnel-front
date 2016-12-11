@@ -16,16 +16,14 @@ main =
     , subscriptions = subscriptions
     }
 
-
-
 -- MODEL
-
 
 type alias Model =
   { topic : String
   , gifUrl : String
   , partyStatus : String
   , plate :  List (List Square)
+  , move : Move
   }
 
 type alias Square = 
@@ -33,9 +31,16 @@ type alias Square =
     player : String
   }
 
+type alias Move = 
+  { startLine: Int,
+    startRow : Int,
+    endLine: Int,
+    endRow : Int
+  }
+
 init : String -> (Model, Cmd Msg)
 init topic =
-  ( Model topic "waiting.gif" "lol" generatePlate   -- On définit le model lors du premier chargement de la page
+  ( Model topic "waiting.gif" "lol" generatePlate initMove -- On définit le model lors du premier chargement de la page
   , getRandomGif topic -- Et on charge tout de suite un premier gif
   )
 
@@ -153,7 +158,7 @@ update msg model =
       (model, getRandomGif model.topic)
 
     NewGif (Ok newUrl) ->
-      (Model model.topic newUrl model.partyStatus model.plate , Cmd.none)
+      (Model model.topic newUrl model.partyStatus model.plate initMove, Cmd.none)
 
     NewGif (Err _) ->
       (model, Cmd.none)
@@ -163,14 +168,14 @@ update msg model =
       (model, getPartyStatus "Conard" "blanc" )
 
     NewPartyStatus (Ok partyStatus) ->
-      (Model model.topic model.gifUrl partyStatus model.plate, Cmd.none)
+      (Model model.topic model.gifUrl partyStatus model.plate initMove, Cmd.none)
 
     NewPartyStatus (Err _) ->
       (model, Cmd.none)
 
     -- ONCLICK 
     SquareClick indexLine indexRow ->
-      (Model model.topic model.gifUrl ((toString indexLine)++"-"++(toString indexRow)) model.plate, Cmd.none)
+      ( Model model.topic model.gifUrl model.partyStatus model.plate (moveUpdate model.move indexLine indexRow), Cmd.none)
 
 
 -- VIEW
@@ -250,3 +255,16 @@ getRandomGif topic =
 decodeGifUrl : Decode.Decoder String  -- Decode Json qui permet de récupèrer un élement (image_url dans data) dans du JSON
 decodeGifUrl =
   Decode.at ["data", "image_url"] Decode.string
+
+initMove : Move
+initMove =
+ Move -1 -1 -1 -1
+
+moveUpdate : Move -> Int -> Int -> Move -- Réussir a passer le move du model et à le modifier a travers cette fonction // TODO
+moveUpdate move indexLine indexRow =
+  if move.startLine == -1 && move.startRow == -1 then
+    Move indexLine indexRow move.endLine move.endRow 
+  else if move.endLine == -1 && move.endRow == -1 then
+    Move move.startLine move.startRow indexLine indexRow 
+  else
+    Move indexLine indexRow -1 -1

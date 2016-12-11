@@ -25,9 +25,9 @@ var _user$project$Main$decodePartyStatus = A2(
 var _user$project$Main$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$none;
 };
-var _user$project$Main$Model = F4(
-	function (a, b, c, d) {
-		return {topic: a, gifUrl: b, partyStatus: c, plate: d};
+var _user$project$Main$Model = F5(
+	function (a, b, c, d, e) {
+		return {topic: a, gifUrl: b, partyStatus: c, plate: d, move: e};
 	});
 var _user$project$Main$Square = F2(
 	function (a, b) {
@@ -394,6 +394,15 @@ var _user$project$Main$generatePlate = {
 		}
 	}
 };
+var _user$project$Main$Move = F4(
+	function (a, b, c, d) {
+		return {startLine: a, startRow: b, endLine: c, endRow: d};
+	});
+var _user$project$Main$initMove = A4(_user$project$Main$Move, -1, -1, -1, -1);
+var _user$project$Main$moveUpdate = F3(
+	function (move, indexLine, indexRow) {
+		return (_elm_lang$core$Native_Utils.eq(move.startLine, -1) && _elm_lang$core$Native_Utils.eq(move.startRow, -1)) ? A4(_user$project$Main$Move, indexLine, indexRow, move.endLine, move.endRow) : ((_elm_lang$core$Native_Utils.eq(move.endLine, -1) && _elm_lang$core$Native_Utils.eq(move.endRow, -1)) ? A4(_user$project$Main$Move, move.startLine, move.startRow, indexLine, indexRow) : A4(_user$project$Main$Move, indexLine, indexRow, -1, -1));
+	});
 var _user$project$Main$SquareClick = F2(
 	function (a, b) {
 		return {ctor: 'SquareClick', _0: a, _1: b};
@@ -554,7 +563,7 @@ var _user$project$Main$getRandomGif = function (topic) {
 var _user$project$Main$init = function (topic) {
 	return {
 		ctor: '_Tuple2',
-		_0: A4(_user$project$Main$Model, topic, 'waiting.gif', 'lol', _user$project$Main$generatePlate),
+		_0: A5(_user$project$Main$Model, topic, 'waiting.gif', 'lol', _user$project$Main$generatePlate, _user$project$Main$initMove),
 		_1: _user$project$Main$getRandomGif(topic)
 	};
 };
@@ -572,7 +581,7 @@ var _user$project$Main$update = F2(
 				if (_p3._0.ctor === 'Ok') {
 					return {
 						ctor: '_Tuple2',
-						_0: A4(_user$project$Main$Model, model.topic, _p3._0._0, model.partyStatus, model.plate),
+						_0: A5(_user$project$Main$Model, model.topic, _p3._0._0, model.partyStatus, model.plate, _user$project$Main$initMove),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
@@ -588,7 +597,7 @@ var _user$project$Main$update = F2(
 				if (_p3._0.ctor === 'Ok') {
 					return {
 						ctor: '_Tuple2',
-						_0: A4(_user$project$Main$Model, model.topic, model.gifUrl, _p3._0._0, model.plate),
+						_0: A5(_user$project$Main$Model, model.topic, model.gifUrl, _p3._0._0, model.plate, _user$project$Main$initMove),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
@@ -597,18 +606,13 @@ var _user$project$Main$update = F2(
 			default:
 				return {
 					ctor: '_Tuple2',
-					_0: A4(
+					_0: A5(
 						_user$project$Main$Model,
 						model.topic,
 						model.gifUrl,
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							_elm_lang$core$Basics$toString(_p3._0),
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								'-',
-								_elm_lang$core$Basics$toString(_p3._1))),
-						model.plate),
+						model.partyStatus,
+						model.plate,
+						A3(_user$project$Main$moveUpdate, model.move, _p3._0, _p3._1)),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 		}
