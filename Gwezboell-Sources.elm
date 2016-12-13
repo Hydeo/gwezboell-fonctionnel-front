@@ -5,9 +5,8 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Http
-import Json.Decode as Decode
-
-
+import Json.Decode exposing (..)
+import Json.Decode.Extra exposing ((|:))
 main =
   Html.program
     { init = init "cats"
@@ -22,13 +21,8 @@ type alias Model =
   { topic : String
   , gifUrl : String
   , partyStatus : String
-  , plate :  List (List Square)
+  , plate :  List (List String)
   , move : Move
-  }
-
-type alias Square = 
-  { piece : String,
-    player : String
   }
 
 type alias Move = 
@@ -38,106 +32,16 @@ type alias Move =
     endRow : Int
   }
 
+
 init : String -> (Model, Cmd Msg)
 init topic =
   ( Model topic "waiting.gif" "lol" generatePlate initMove -- On définit le model lors du premier chargement de la page
-  , getRandomGif topic -- Et on charge tout de suite un premier gif
+  , initPlayer "Boulet" "Blanc" -- Et on charge tout de suite un premier gif
   )
 
-generatePlate : List (List Square)
+generatePlate : List (List String)
 generatePlate = 
-  [
-   [ Square "Null" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Null",
-    Square "PionN" "Conard",
-    Square "PionN" "Conard",
-    Square "PionN" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Conard"
-    ],
-    [ Square "Null" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Null",
-    Square "Null" "Conard",
-    Square "PionN" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Conard"
-    ],
-    [ Square "Null" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Null",
-    Square "Null" "Conard",
-    Square "PionB" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Conard"
-    ],
-    [ Square "PionN" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Null",
-    Square "Null" "Conard",
-    Square "PionB" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Conard",
-    Square "PionN" "Conard"
-    ],
-    [ Square "PionN" "Conard",
-    Square "PionN" "Conard",
-    Square "PionB" "Null",
-    Square "PionB" "Conard",
-    Square "RoiB" "Conard",
-    Square "PionB" "Conard",
-    Square "PionB" "Conard",
-    Square "PionN" "Conard",
-    Square "PionN" "Conard"
-    ],
-    [ Square "PionN" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Null",
-    Square "Null" "Conard",
-    Square "PionB" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Conard",
-    Square "PionN" "Conard"
-    ],
-    [ Square "Null" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Null",
-    Square "Null" "Conard",
-    Square "PionB" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Conard"
-    ],
-    [ Square "Null" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Null",
-    Square "Null" "Conard",
-    Square "PionN" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Conard"
-    ],
-    [ Square "Null" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Null",
-    Square "PionN" "Conard",
-    Square "PionN" "Conard",
-    Square "PionN" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Conard",
-    Square "Null" "Conard"
-    ]
-  ]
+  [["Null","Null","Null","PionN","PionN","PionN","Null","Null","Null"],["Null","Null","Null","Null","PionN","Null","Null","Null","Null"],["Null","Null","Null","Null","PionB","Null","Null","Null","Null"],["PionN","Null","Null","Null","PionB","Null","Null","Null","PionN"],["PionN","PionN","PionB","PionB","RoiB","PionB","PionB","PionN","PionN"],["PionN","Null","Null","Null","PionB","Null","Null","Null","PionN"],["Null","Null","Null","Null","PionB","Null","Null","Null","Null"],["Null","Null","Null","Null","PionN","Null","Null","Null","Null"],["Null","Null","Null","PionN","PionN","PionN","Null","Null","Null"]]
 
 -- UPDATE
 
@@ -145,9 +49,11 @@ generatePlate =
 type Msg
   = MorePlease
   | NewGif (Result Http.Error String)
+  | InitPlayerMsg (Result Http.Error String)
   | UpdateStatus
   | NewPartyStatus (Result Http.Error String)
-  | SquareClick Int Int
+  | CaseClick Int Int
+
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -163,6 +69,13 @@ update msg model =
     NewGif (Err _) ->
       (model, Cmd.none)
 
+    -- INIT PLAYER 
+    InitPlayerMsg (Ok plateUpdate) ->
+      (Model model.topic model.gifUrl model.partyStatus (plateUpdateDecoder plateUpdate) initMove, Cmd.none)
+
+    InitPlayerMsg (Err _) ->
+      (model, Cmd.none)
+
     -- STATUS PARTY
     UpdateStatus ->
       (model, getPartyStatus "Conard" "blanc" )
@@ -174,7 +87,7 @@ update msg model =
       (model, Cmd.none)
 
     -- ONCLICK 
-    SquareClick indexLine indexRow ->
+    CaseClick indexLine indexRow ->
       ( Model model.topic model.gifUrl model.partyStatus model.plate (moveUpdate model.move indexLine indexRow), Cmd.none)
 
 
@@ -195,30 +108,30 @@ view model =
     ]
 
 
-viewPlate : Int -> List Square -> Html Msg
+viewPlate : Int -> List String -> Html Msg
 viewPlate indexLine plate = 
-  tr[id (toString indexLine)](List.indexedMap (viewSquare indexLine) plate )
+  tr[id (toString indexLine)](List.indexedMap (viewCase indexLine) plate )
 
     
-viewSquare : Int -> Int -> Square -> Html Msg
-viewSquare indexRow indexLine {piece , player} =
+viewCase : Int -> Int -> String -> Html Msg
+viewCase indexRow indexLine piece  =
   if ((indexRow == 0 || indexRow == 8) && (indexLine == 0 || indexLine == 8)) then
     if (piece /= "Null") then
-      td[id ((toString indexRow)++(toString indexLine)), class "corner", onClick (SquareClick indexRow indexLine)]
+      td[id ((toString indexRow)++(toString indexLine)), class "corner", onClick (CaseClick indexRow indexLine)]
       [
         img [src ("img/"++piece++".png")][]
       ]
     else
-      td[id ((toString indexRow)++(toString indexLine)), class "corner", onClick (SquareClick indexRow indexLine)]
+      td[id ((toString indexRow)++(toString indexLine)), class "corner", onClick (CaseClick indexRow indexLine)]
       []
   else
     if (piece /= "Null") then
-      td[id ((toString indexRow)++(toString indexLine)), class "floor", onClick (SquareClick indexRow indexLine)]
+      td[id ((toString indexRow)++(toString indexLine)), class "floor", onClick (CaseClick indexRow indexLine)]
       [
         img [src ("img/"++piece++".png")][]
       ]
     else
-      td[id ((toString indexRow)++(toString indexLine)), class "floor", onClick (SquareClick indexRow indexLine)]
+      td[id ((toString indexRow)++(toString indexLine)), class "floor", onClick (CaseClick indexRow indexLine)]
       []
   
 -- SUBSCRIPTIONS --------------------
@@ -227,10 +140,9 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
   Sub.none
 
-
-
 -- HTTP ----------------------------
 
+-- Récupération du Statu de la party
 getPartyStatus : String -> String -> Cmd Msg
 getPartyStatus playerName team = 
   let 
@@ -239,10 +151,12 @@ getPartyStatus playerName team =
   in
     Http.send NewPartyStatus (Http.get url decodePartyStatus)
 
-decodePartyStatus : Decode.Decoder String  -- Decode Json qui permet de récupèrer un élement (image_url dans data) dans du JSON
+-- Decode Json qui permet de récupèrer un élement (image_url dans data) dans du JSON
+decodePartyStatus : Json.Decode.Decoder String  
 decodePartyStatus =
-  Decode.at ["data", "Plate"] Decode.string
+  Json.Decode.at ["partyState", "Plate"] Json.Decode.string
 
+-- A Supprimer
 getRandomGif : String -> Cmd Msg 
 getRandomGif topic =
   let
@@ -251,15 +165,60 @@ getRandomGif topic =
   in
     Http.send NewGif (Http.get url decodeGifUrl) -- Et la on fait appel a la cmd qui va effectuer pour de vrai la requette HTTP
 
-
-decodeGifUrl : Decode.Decoder String  -- Decode Json qui permet de récupèrer un élement (image_url dans data) dans du JSON
+-- A supprimer
+decodeGifUrl : Json.Decode.Decoder String  -- Decode Json qui permet de récupèrer un élement (image_url dans data) dans du JSON
 decodeGifUrl =
-  Decode.at ["data", "image_url"] Decode.string
+  Json.Decode.at ["data", "image_url"] Json.Decode.string
 
+-- Initialisation du double-click move
 initMove : Move
 initMove =
  Move -1 -1 -1 -1
 
+initPlayer : String -> String -> Cmd Msg
+initPlayer pseudo team =
+  let 
+    url = 
+      "http://demo1416923.mockable.io/listPlate"
+  in 
+    Http.send InitPlayerMsg (Http.getString url)
+
+caseDecoder : Json.Decode.Decoder (List(String))
+caseDecoder = 
+  Json.Decode.at ["plate"] (Json.Decode.list Json.Decode.string)
+
+plateUpdateDecoder : String -> List (List String)
+plateUpdateDecoder stringPlate =
+  let 
+    d = Json.Decode.decodeString (Json.Decode.list (Json.Decode.list Json.Decode.string)) stringPlate
+  in
+    case d of
+        Ok x ->  x
+        Err msg -> [[""]]
+
+-- (Col(Ligne "0" "0" "0" "0" "0" "0" "0" "0" "0")
+--caseDecoder : Json.Decode.Decoder Ligne
+--caseDecoder = 
+--  succeed Ligne
+--    |: (field "l0" string)
+--    |: (field "l1" string)s
+--    |: (field "l2" string)
+--    |: (field "l3" string)
+--    |: (field "l4" string)
+--    |: (field "l5" string)
+--    |: (field "l6" string)
+--    |: (field "l7" string)
+--    |: (field "l8" string)
+--  
+--colDecoder : Json.Decode.Decoder Col
+--colDecoder = 
+--  succeed  Col
+--    |: (field "c0" caseDecoder)
+--    |: (field "c1" caseDecoder)
+
+  
+
+-- En cas de double-click move, update du Model-Move 
 moveUpdate : Move -> Int -> Int -> Move -- Réussir a passer le move du model et à le modifier a travers cette fonction // TODO
 moveUpdate move indexLine indexRow =
   if move.startLine == -1 && move.startRow == -1 then
