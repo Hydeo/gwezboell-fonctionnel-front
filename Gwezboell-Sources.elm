@@ -21,31 +21,8 @@ type alias Model =
   { topic : String
   , gifUrl : String
   , partyStatus : String
-  , plate :  List (List Case)
+  , plate :  List (List String)
   , move : Move
-  , tmpLigne : List (List String)
-  }
-
-type alias Case = 
-  { piece : String,
-    player : String
-  }
-
-type alias Ligne = 
-  { l0 : String,
-    l1 : String,
-    l2 : String,
-    l3 : String,
-    l4 : String,
-    l5 : String,
-    l6 : String,
-    l7 : String,
-    l8 : String
-  }
-
-type alias Col = 
-  { c0 : Ligne,
-    c1 : Ligne
   }
 
 type alias Move = 
@@ -55,106 +32,16 @@ type alias Move =
     endRow : Int
   }
 
+
 init : String -> (Model, Cmd Msg)
 init topic =
-  ( Model topic "waiting.gif" "lol" generatePlate initMove [[""]]-- On définit le model lors du premier chargement de la page
+  ( Model topic "waiting.gif" "lol" generatePlate initMove -- On définit le model lors du premier chargement de la page
   , initPlayer "Boulet" "Blanc" -- Et on charge tout de suite un premier gif
   )
 
-generatePlate : List (List Case)
+generatePlate : List (List String)
 generatePlate = 
-  [
-   [ Case "Null" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Null",
-    Case "PionN" "Conard",
-    Case "PionN" "Conard",
-    Case "PionN" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Conard"
-    ],
-    [ Case "Null" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Null",
-    Case "Null" "Conard",
-    Case "PionN" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Conard"
-    ],
-    [ Case "Null" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Null",
-    Case "Null" "Conard",
-    Case "PionB" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Conard"
-    ],
-    [ Case "PionN" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Null",
-    Case "Null" "Conard",
-    Case "PionB" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Conard",
-    Case "PionN" "Conard"
-    ],
-    [ Case "PionN" "Conard",
-    Case "PionN" "Conard",
-    Case "PionB" "Null",
-    Case "PionB" "Conard",
-    Case "RoiB" "Conard",
-    Case "PionB" "Conard",
-    Case "PionB" "Conard",
-    Case "PionN" "Conard",
-    Case "PionN" "Conard"
-    ],
-    [ Case "PionN" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Null",
-    Case "Null" "Conard",
-    Case "PionB" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Conard",
-    Case "PionN" "Conard"
-    ],
-    [ Case "Null" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Null",
-    Case "Null" "Conard",
-    Case "PionB" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Conard"
-    ],
-    [ Case "Null" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Null",
-    Case "Null" "Conard",
-    Case "PionN" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Conard"
-    ],
-    [ Case "Null" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Null",
-    Case "PionN" "Conard",
-    Case "PionN" "Conard",
-    Case "PionN" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Conard",
-    Case "Null" "Conard"
-    ]
-  ]
+  [["Null","Null","Null","PionN","PionN","PionN","Null","Null","Null"],["Null","Null","Null","Null","PionN","Null","Null","Null","Null"],["Null","Null","Null","Null","PionB","Null","Null","Null","Null"],["PionN","Null","Null","Null","PionB","Null","Null","Null","PionN"],["PionN","PionN","PionB","PionB","RoiB","PionB","PionB","PionN","PionN"],["PionN","Null","Null","Null","PionB","Null","Null","Null","PionN"],["Null","Null","Null","Null","PionB","Null","Null","Null","Null"],["Null","Null","Null","Null","PionN","Null","Null","Null","Null"],["Null","Null","Null","PionN","PionN","PionN","Null","Null","Null"]]
 
 -- UPDATE
 
@@ -177,14 +64,14 @@ update msg model =
       (model, getRandomGif model.topic)
 
     NewGif (Ok newUrl) ->
-      (Model model.topic newUrl model.partyStatus model.plate initMove  [[""]], Cmd.none)
+      (Model model.topic newUrl model.partyStatus model.plate initMove, Cmd.none)
 
     NewGif (Err _) ->
       (model, Cmd.none)
 
     -- INIT PLAYER 
     InitPlayerMsg (Ok plateUpdate) ->
-      (Model model.topic model.gifUrl model.partyStatus model.plate initMove (plateUpdateDecoder plateUpdate), Cmd.none)
+      (Model model.topic model.gifUrl model.partyStatus (plateUpdateDecoder plateUpdate) initMove, Cmd.none)
 
     InitPlayerMsg (Err _) ->
       (model, Cmd.none)
@@ -194,14 +81,14 @@ update msg model =
       (model, getPartyStatus "Conard" "blanc" )
 
     NewPartyStatus (Ok partyStatus) ->
-      (Model model.topic model.gifUrl partyStatus model.plate initMove  [[""]], Cmd.none)
+      (Model model.topic model.gifUrl partyStatus model.plate initMove, Cmd.none)
 
     NewPartyStatus (Err _) ->
       (model, Cmd.none)
 
     -- ONCLICK 
     CaseClick indexLine indexRow ->
-      ( Model model.topic model.gifUrl model.partyStatus model.plate (moveUpdate model.move indexLine indexRow)  [[""]], Cmd.none)
+      ( Model model.topic model.gifUrl model.partyStatus model.plate (moveUpdate model.move indexLine indexRow), Cmd.none)
 
 
 -- VIEW
@@ -221,13 +108,13 @@ view model =
     ]
 
 
-viewPlate : Int -> List Case -> Html Msg
+viewPlate : Int -> List String -> Html Msg
 viewPlate indexLine plate = 
   tr[id (toString indexLine)](List.indexedMap (viewCase indexLine) plate )
 
     
-viewCase : Int -> Int -> Case -> Html Msg
-viewCase indexRow indexLine {piece , player} =
+viewCase : Int -> Int -> String -> Html Msg
+viewCase indexRow indexLine piece  =
   if ((indexRow == 0 || indexRow == 8) && (indexLine == 0 || indexLine == 8)) then
     if (piece /= "Null") then
       td[id ((toString indexRow)++(toString indexLine)), class "corner", onClick (CaseClick indexRow indexLine)]

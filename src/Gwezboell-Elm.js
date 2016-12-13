@@ -9378,43 +9378,35 @@ var _user$project$Main$decodePartyStatus = A2(
 var _user$project$Main$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$none;
 };
-var _user$project$Main$Model = F6(
-	function (a, b, c, d, e, f) {
-		return {topic: a, gifUrl: b, partyStatus: c, plate: d, move: e, tmpLigne: f};
-	});
-var _user$project$Main$Case = F2(
-	function (a, b) {
-		return {piece: a, player: b};
-	});
 var _user$project$Main$generatePlate = {
 	ctor: '::',
 	_0: {
 		ctor: '::',
-		_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+		_0: 'Null',
 		_1: {
 			ctor: '::',
-			_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+			_0: 'Null',
 			_1: {
 				ctor: '::',
-				_0: A2(_user$project$Main$Case, 'Null', 'Null'),
+				_0: 'Null',
 				_1: {
 					ctor: '::',
-					_0: A2(_user$project$Main$Case, 'PionN', 'Conard'),
+					_0: 'PionN',
 					_1: {
 						ctor: '::',
-						_0: A2(_user$project$Main$Case, 'PionN', 'Conard'),
+						_0: 'PionN',
 						_1: {
 							ctor: '::',
-							_0: A2(_user$project$Main$Case, 'PionN', 'Conard'),
+							_0: 'PionN',
 							_1: {
 								ctor: '::',
-								_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+								_0: 'Null',
 								_1: {
 									ctor: '::',
-									_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+									_0: 'Null',
 									_1: {
 										ctor: '::',
-										_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+										_0: 'Null',
 										_1: {ctor: '[]'}
 									}
 								}
@@ -9429,31 +9421,31 @@ var _user$project$Main$generatePlate = {
 		ctor: '::',
 		_0: {
 			ctor: '::',
-			_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+			_0: 'Null',
 			_1: {
 				ctor: '::',
-				_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+				_0: 'Null',
 				_1: {
 					ctor: '::',
-					_0: A2(_user$project$Main$Case, 'Null', 'Null'),
+					_0: 'Null',
 					_1: {
 						ctor: '::',
-						_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+						_0: 'Null',
 						_1: {
 							ctor: '::',
-							_0: A2(_user$project$Main$Case, 'PionN', 'Conard'),
+							_0: 'PionN',
 							_1: {
 								ctor: '::',
-								_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+								_0: 'Null',
 								_1: {
 									ctor: '::',
-									_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+									_0: 'Null',
 									_1: {
 										ctor: '::',
-										_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+										_0: 'Null',
 										_1: {
 											ctor: '::',
-											_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+											_0: 'Null',
 											_1: {ctor: '[]'}
 										}
 									}
@@ -9468,31 +9460,31 @@ var _user$project$Main$generatePlate = {
 			ctor: '::',
 			_0: {
 				ctor: '::',
-				_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+				_0: 'Null',
 				_1: {
 					ctor: '::',
-					_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+					_0: 'Null',
 					_1: {
 						ctor: '::',
-						_0: A2(_user$project$Main$Case, 'Null', 'Null'),
+						_0: 'Null',
 						_1: {
 							ctor: '::',
-							_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+							_0: 'Null',
 							_1: {
 								ctor: '::',
-								_0: A2(_user$project$Main$Case, 'PionB', 'Conard'),
+								_0: 'PionB',
 								_1: {
 									ctor: '::',
-									_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+									_0: 'Null',
 									_1: {
 										ctor: '::',
-										_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+										_0: 'Null',
 										_1: {
 											ctor: '::',
-											_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+											_0: 'Null',
 											_1: {
 												ctor: '::',
-												_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+												_0: 'Null',
 												_1: {ctor: '[]'}
 											}
 										}
@@ -9507,31 +9499,31 @@ var _user$project$Main$generatePlate = {
 				ctor: '::',
 				_0: {
 					ctor: '::',
-					_0: A2(_user$project$Main$Case, 'PionN', 'Conard'),
+					_0: 'PionN',
 					_1: {
 						ctor: '::',
-						_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+						_0: 'Null',
 						_1: {
 							ctor: '::',
-							_0: A2(_user$project$Main$Case, 'Null', 'Null'),
+							_0: 'Null',
 							_1: {
 								ctor: '::',
-								_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+								_0: 'Null',
 								_1: {
 									ctor: '::',
-									_0: A2(_user$project$Main$Case, 'PionB', 'Conard'),
+									_0: 'PionB',
 									_1: {
 										ctor: '::',
-										_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+										_0: 'Null',
 										_1: {
 											ctor: '::',
-											_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+											_0: 'Null',
 											_1: {
 												ctor: '::',
-												_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+												_0: 'Null',
 												_1: {
 													ctor: '::',
-													_0: A2(_user$project$Main$Case, 'PionN', 'Conard'),
+													_0: 'PionN',
 													_1: {ctor: '[]'}
 												}
 											}
@@ -9546,31 +9538,31 @@ var _user$project$Main$generatePlate = {
 					ctor: '::',
 					_0: {
 						ctor: '::',
-						_0: A2(_user$project$Main$Case, 'PionN', 'Conard'),
+						_0: 'PionN',
 						_1: {
 							ctor: '::',
-							_0: A2(_user$project$Main$Case, 'PionN', 'Conard'),
+							_0: 'PionN',
 							_1: {
 								ctor: '::',
-								_0: A2(_user$project$Main$Case, 'PionB', 'Null'),
+								_0: 'PionB',
 								_1: {
 									ctor: '::',
-									_0: A2(_user$project$Main$Case, 'PionB', 'Conard'),
+									_0: 'PionB',
 									_1: {
 										ctor: '::',
-										_0: A2(_user$project$Main$Case, 'RoiB', 'Conard'),
+										_0: 'RoiB',
 										_1: {
 											ctor: '::',
-											_0: A2(_user$project$Main$Case, 'PionB', 'Conard'),
+											_0: 'PionB',
 											_1: {
 												ctor: '::',
-												_0: A2(_user$project$Main$Case, 'PionB', 'Conard'),
+												_0: 'PionB',
 												_1: {
 													ctor: '::',
-													_0: A2(_user$project$Main$Case, 'PionN', 'Conard'),
+													_0: 'PionN',
 													_1: {
 														ctor: '::',
-														_0: A2(_user$project$Main$Case, 'PionN', 'Conard'),
+														_0: 'PionN',
 														_1: {ctor: '[]'}
 													}
 												}
@@ -9585,31 +9577,31 @@ var _user$project$Main$generatePlate = {
 						ctor: '::',
 						_0: {
 							ctor: '::',
-							_0: A2(_user$project$Main$Case, 'PionN', 'Conard'),
+							_0: 'PionN',
 							_1: {
 								ctor: '::',
-								_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+								_0: 'Null',
 								_1: {
 									ctor: '::',
-									_0: A2(_user$project$Main$Case, 'Null', 'Null'),
+									_0: 'Null',
 									_1: {
 										ctor: '::',
-										_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+										_0: 'Null',
 										_1: {
 											ctor: '::',
-											_0: A2(_user$project$Main$Case, 'PionB', 'Conard'),
+											_0: 'PionB',
 											_1: {
 												ctor: '::',
-												_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+												_0: 'Null',
 												_1: {
 													ctor: '::',
-													_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+													_0: 'Null',
 													_1: {
 														ctor: '::',
-														_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+														_0: 'Null',
 														_1: {
 															ctor: '::',
-															_0: A2(_user$project$Main$Case, 'PionN', 'Conard'),
+															_0: 'PionN',
 															_1: {ctor: '[]'}
 														}
 													}
@@ -9624,31 +9616,31 @@ var _user$project$Main$generatePlate = {
 							ctor: '::',
 							_0: {
 								ctor: '::',
-								_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+								_0: 'Null',
 								_1: {
 									ctor: '::',
-									_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+									_0: 'Null',
 									_1: {
 										ctor: '::',
-										_0: A2(_user$project$Main$Case, 'Null', 'Null'),
+										_0: 'Null',
 										_1: {
 											ctor: '::',
-											_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+											_0: 'Null',
 											_1: {
 												ctor: '::',
-												_0: A2(_user$project$Main$Case, 'PionB', 'Conard'),
+												_0: 'PionB',
 												_1: {
 													ctor: '::',
-													_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+													_0: 'Null',
 													_1: {
 														ctor: '::',
-														_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+														_0: 'Null',
 														_1: {
 															ctor: '::',
-															_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+															_0: 'Null',
 															_1: {
 																ctor: '::',
-																_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+																_0: 'Null',
 																_1: {ctor: '[]'}
 															}
 														}
@@ -9663,31 +9655,31 @@ var _user$project$Main$generatePlate = {
 								ctor: '::',
 								_0: {
 									ctor: '::',
-									_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+									_0: 'Null',
 									_1: {
 										ctor: '::',
-										_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+										_0: 'Null',
 										_1: {
 											ctor: '::',
-											_0: A2(_user$project$Main$Case, 'Null', 'Null'),
+											_0: 'Null',
 											_1: {
 												ctor: '::',
-												_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+												_0: 'Null',
 												_1: {
 													ctor: '::',
-													_0: A2(_user$project$Main$Case, 'PionN', 'Conard'),
+													_0: 'PionN',
 													_1: {
 														ctor: '::',
-														_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+														_0: 'Null',
 														_1: {
 															ctor: '::',
-															_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+															_0: 'Null',
 															_1: {
 																ctor: '::',
-																_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+																_0: 'Null',
 																_1: {
 																	ctor: '::',
-																	_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+																	_0: 'Null',
 																	_1: {ctor: '[]'}
 																}
 															}
@@ -9702,31 +9694,31 @@ var _user$project$Main$generatePlate = {
 									ctor: '::',
 									_0: {
 										ctor: '::',
-										_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+										_0: 'Null',
 										_1: {
 											ctor: '::',
-											_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+											_0: 'Null',
 											_1: {
 												ctor: '::',
-												_0: A2(_user$project$Main$Case, 'Null', 'Null'),
+												_0: 'Null',
 												_1: {
 													ctor: '::',
-													_0: A2(_user$project$Main$Case, 'PionN', 'Conard'),
+													_0: 'PionN',
 													_1: {
 														ctor: '::',
-														_0: A2(_user$project$Main$Case, 'PionN', 'Conard'),
+														_0: 'PionN',
 														_1: {
 															ctor: '::',
-															_0: A2(_user$project$Main$Case, 'PionN', 'Conard'),
+															_0: 'PionN',
 															_1: {
 																ctor: '::',
-																_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+																_0: 'Null',
 																_1: {
 																	ctor: '::',
-																	_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+																	_0: 'Null',
 																	_1: {
 																		ctor: '::',
-																		_0: A2(_user$project$Main$Case, 'Null', 'Conard'),
+																		_0: 'Null',
 																		_1: {ctor: '[]'}
 																	}
 																}
@@ -9747,13 +9739,9 @@ var _user$project$Main$generatePlate = {
 		}
 	}
 };
-var _user$project$Main$Ligne = F9(
-	function (a, b, c, d, e, f, g, h, i) {
-		return {l0: a, l1: b, l2: c, l3: d, l4: e, l5: f, l6: g, l7: h, l8: i};
-	});
-var _user$project$Main$Col = F2(
-	function (a, b) {
-		return {c0: a, c1: b};
+var _user$project$Main$Model = F5(
+	function (a, b, c, d, e) {
+		return {topic: a, gifUrl: b, partyStatus: c, plate: d, move: e};
 	});
 var _user$project$Main$Move = F4(
 	function (a, b, c, d) {
@@ -9769,10 +9757,8 @@ var _user$project$Main$CaseClick = F2(
 		return {ctor: 'CaseClick', _0: a, _1: b};
 	});
 var _user$project$Main$viewCase = F3(
-	function (indexRow, indexLine, _p1) {
-		var _p2 = _p1;
-		var _p3 = _p2.piece;
-		return ((_elm_lang$core$Native_Utils.eq(indexRow, 0) || _elm_lang$core$Native_Utils.eq(indexRow, 8)) && (_elm_lang$core$Native_Utils.eq(indexLine, 0) || _elm_lang$core$Native_Utils.eq(indexLine, 8))) ? ((!_elm_lang$core$Native_Utils.eq(_p3, 'Null')) ? A2(
+	function (indexRow, indexLine, piece) {
+		return ((_elm_lang$core$Native_Utils.eq(indexRow, 0) || _elm_lang$core$Native_Utils.eq(indexRow, 8)) && (_elm_lang$core$Native_Utils.eq(indexLine, 0) || _elm_lang$core$Native_Utils.eq(indexLine, 8))) ? ((!_elm_lang$core$Native_Utils.eq(piece, 'Null')) ? A2(
 			_elm_lang$html$Html$td,
 			{
 				ctor: '::',
@@ -9802,7 +9788,7 @@ var _user$project$Main$viewCase = F3(
 							A2(
 								_elm_lang$core$Basics_ops['++'],
 								'img/',
-								A2(_elm_lang$core$Basics_ops['++'], _p3, '.png'))),
+								A2(_elm_lang$core$Basics_ops['++'], piece, '.png'))),
 						_1: {ctor: '[]'}
 					},
 					{ctor: '[]'}),
@@ -9827,7 +9813,7 @@ var _user$project$Main$viewCase = F3(
 					}
 				}
 			},
-			{ctor: '[]'})) : ((!_elm_lang$core$Native_Utils.eq(_p3, 'Null')) ? A2(
+			{ctor: '[]'})) : ((!_elm_lang$core$Native_Utils.eq(piece, 'Null')) ? A2(
 			_elm_lang$html$Html$td,
 			{
 				ctor: '::',
@@ -9857,7 +9843,7 @@ var _user$project$Main$viewCase = F3(
 							A2(
 								_elm_lang$core$Basics_ops['++'],
 								'img/',
-								A2(_elm_lang$core$Basics_ops['++'], _p3, '.png'))),
+								A2(_elm_lang$core$Basics_ops['++'], piece, '.png'))),
 						_1: {ctor: '[]'}
 					},
 					{ctor: '[]'}),
@@ -9925,22 +9911,7 @@ var _user$project$Main$initPlayer = F2(
 var _user$project$Main$init = function (topic) {
 	return {
 		ctor: '_Tuple2',
-		_0: A6(
-			_user$project$Main$Model,
-			topic,
-			'waiting.gif',
-			'lol',
-			_user$project$Main$generatePlate,
-			_user$project$Main$initMove,
-			{
-				ctor: '::',
-				_0: {
-					ctor: '::',
-					_0: '',
-					_1: {ctor: '[]'}
-				},
-				_1: {ctor: '[]'}
-			}),
+		_0: A5(_user$project$Main$Model, topic, 'waiting.gif', 'lol', _user$project$Main$generatePlate, _user$project$Main$initMove),
 		_1: A2(_user$project$Main$initPlayer, 'Boulet', 'Blanc')
 	};
 };
@@ -9956,8 +9927,8 @@ var _user$project$Main$getRandomGif = function (topic) {
 };
 var _user$project$Main$update = F2(
 	function (msg, model) {
-		var _p4 = msg;
-		switch (_p4.ctor) {
+		var _p1 = msg;
+		switch (_p1.ctor) {
 			case 'MorePlease':
 				return {
 					ctor: '_Tuple2',
@@ -9965,42 +9936,26 @@ var _user$project$Main$update = F2(
 					_1: _user$project$Main$getRandomGif(model.topic)
 				};
 			case 'NewGif':
-				if (_p4._0.ctor === 'Ok') {
+				if (_p1._0.ctor === 'Ok') {
 					return {
 						ctor: '_Tuple2',
-						_0: A6(
-							_user$project$Main$Model,
-							model.topic,
-							_p4._0._0,
-							model.partyStatus,
-							model.plate,
-							_user$project$Main$initMove,
-							{
-								ctor: '::',
-								_0: {
-									ctor: '::',
-									_0: '',
-									_1: {ctor: '[]'}
-								},
-								_1: {ctor: '[]'}
-							}),
+						_0: A5(_user$project$Main$Model, model.topic, _p1._0._0, model.partyStatus, model.plate, _user$project$Main$initMove),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 			case 'InitPlayerMsg':
-				if (_p4._0.ctor === 'Ok') {
+				if (_p1._0.ctor === 'Ok') {
 					return {
 						ctor: '_Tuple2',
-						_0: A6(
+						_0: A5(
 							_user$project$Main$Model,
 							model.topic,
 							model.gifUrl,
 							model.partyStatus,
-							model.plate,
-							_user$project$Main$initMove,
-							_user$project$Main$plateUpdateDecoder(_p4._0._0)),
+							_user$project$Main$plateUpdateDecoder(_p1._0._0),
+							_user$project$Main$initMove),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
@@ -10013,25 +9968,10 @@ var _user$project$Main$update = F2(
 					_1: A2(_user$project$Main$getPartyStatus, 'Conard', 'blanc')
 				};
 			case 'NewPartyStatus':
-				if (_p4._0.ctor === 'Ok') {
+				if (_p1._0.ctor === 'Ok') {
 					return {
 						ctor: '_Tuple2',
-						_0: A6(
-							_user$project$Main$Model,
-							model.topic,
-							model.gifUrl,
-							_p4._0._0,
-							model.plate,
-							_user$project$Main$initMove,
-							{
-								ctor: '::',
-								_0: {
-									ctor: '::',
-									_0: '',
-									_1: {ctor: '[]'}
-								},
-								_1: {ctor: '[]'}
-							}),
+						_0: A5(_user$project$Main$Model, model.topic, model.gifUrl, _p1._0._0, model.plate, _user$project$Main$initMove),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
@@ -10040,22 +9980,13 @@ var _user$project$Main$update = F2(
 			default:
 				return {
 					ctor: '_Tuple2',
-					_0: A6(
+					_0: A5(
 						_user$project$Main$Model,
 						model.topic,
 						model.gifUrl,
 						model.partyStatus,
 						model.plate,
-						A3(_user$project$Main$moveUpdate, model.move, _p4._0, _p4._1),
-						{
-							ctor: '::',
-							_0: {
-								ctor: '::',
-								_0: '',
-								_1: {ctor: '[]'}
-							},
-							_1: {ctor: '[]'}
-						}),
+						A3(_user$project$Main$moveUpdate, model.move, _p1._0, _p1._1)),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 		}
