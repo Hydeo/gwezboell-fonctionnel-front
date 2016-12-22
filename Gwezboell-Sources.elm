@@ -71,7 +71,7 @@ update msg model =
 
     -- INIT PLAYER 
     InitPlayerMsg (Ok plateUpdate) ->
-      (Model model.topic model.gifUrl model.partyStatus (plateUpdateDecoder plateUpdate) initMove, Cmd.none)
+      (Model model.topic plateUpdate model.partyStatus (plateUpdateDecoder plateUpdate) initMove, Cmd.none)
 
     InitPlayerMsg (Err _) ->
       (model, Cmd.none)
@@ -179,18 +179,18 @@ initPlayer : String -> String -> Cmd Msg
 initPlayer pseudo team =
   let 
     url = 
-      "http://demo1416923.mockable.io/listPlate"
+      "http://demo1416923.mockable.io/listPlate2"
   in 
     Http.send InitPlayerMsg (Http.getString url)
 
 caseDecoder : Json.Decode.Decoder (List(String))
 caseDecoder = 
-  Json.Decode.at ["plate"] (Json.Decode.list Json.Decode.string)
+  Json.Decode.at ["plateau"] (Json.Decode.list Json.Decode.string)
 
 plateUpdateDecoder : String -> List (List String)
 plateUpdateDecoder stringPlate =
   let 
-    d = Json.Decode.decodeString (Json.Decode.list (Json.Decode.list Json.Decode.string)) stringPlate
+    d = Json.Decode.decodeString (field "Plateau" (Json.Decode.list (Json.Decode.list Json.Decode.string))) stringPlate
   in
     case d of
         Ok x ->  x
