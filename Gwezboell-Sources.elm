@@ -20,7 +20,6 @@ main =
 type alias Model =
   { topic : String
   , gifUrl : String
-  , partyStatus : String
   , plate :  List (List String)
   , joueur1 : Player
   , joueur2 : Player
@@ -50,7 +49,7 @@ type alias GameStatus =
 
 init : String -> (Model, Cmd Msg)
 init topic =
-  ( Model topic "waiting.gif" "lol" generatePlate initEmptyPlayer initEmptyPlayer initEmptyPlayer initMove -- On définit le model lors du premier chargement de la page
+  ( Model topic "waiting.gif" generatePlate initEmptyPlayer initEmptyPlayer initEmptyPlayer initMove -- On définit le model lors du premier chargement de la page
   , initPlayer "Boulet" "Blanc" -- Et on charge tout de suite un premier gif
   )
 
@@ -65,9 +64,10 @@ type Msg
   = MorePlease
   | NewGif (Result Http.Error String)
   | InitPlayerMsg (Result Http.Error GameStatus)
-  | UpdateStatus
+  | PlayTurn 
   | NewPartyStatus (Result Http.Error String)
   | CaseClick Int Int
+
 
 
 
@@ -79,31 +79,31 @@ update msg model =
       (model, getRandomGif model.topic)
 
     NewGif (Ok newUrl) ->
-      (Model model.topic newUrl model.partyStatus model.plate  model.joueur1 model.joueur2 model.winner initMove, Cmd.none)
+      (Model model.topic newUrl model.plate  model.joueur1 model.joueur2 model.winner initMove, Cmd.none)
 
     NewGif (Err _) ->
       (model, Cmd.none)
 
     -- INIT PLAYER 
     InitPlayerMsg (Ok plateUpdate) ->
-      (Model model.topic "plateUpdate.plate" model.partyStatus plateUpdate.plate plateUpdate.joueur1 plateUpdate.joueur2 plateUpdate.partieGagnee initMove, Cmd.none)
+      (Model model.topic model.gifUrl plateUpdate.plate plateUpdate.joueur1 plateUpdate.joueur2 plateUpdate.partieGagnee initMove, Cmd.none)
 
     InitPlayerMsg (Err _) ->
       (model, Cmd.none)
 
-    -- STATUS PARTY
-    UpdateStatus ->
-      (model, getPartyStatus "Conard" "blanc" )
+    -- PLAYER Play 
+    PlayTurn ->
+      (model, getPlayResult model.move)
 
     NewPartyStatus (Ok partyStatus) ->
-      (Model model.topic model.gifUrl partyStatus model.plate model.joueur1 model.joueur2 model.winner initMove, Cmd.none)
+      (Model model.topic model.gifUrl  model.plate model.joueur1 model.joueur2 model.winner initMove, Cmd.none)
 
     NewPartyStatus (Err _) ->
       (model, Cmd.none)
 
     -- ONCLICK 
     CaseClick indexLine indexRow ->
-      ( Model model.topic model.gifUrl model.partyStatus model.plate model.joueur1 model.joueur2 model.winner (moveUpdate model.move indexLine indexRow), Cmd.none)
+      ( Model model.topic model.gifUrl model.plate model.joueur1 model.joueur2 model.winner (moveUpdate model.move indexLine indexRow), Cmd.none)
 
 
 -- VIEW
@@ -141,8 +141,7 @@ view model =
     , br [] []
     , img [src model.gifUrl] []
     , br [] []
-    , button [ onClick UpdateStatus,  class "btn btn-default" ] [ text "Get Status" ]
-    , p[][text model.partyStatus]
+    , button [ onClick PlayTurn,  class "btn btn-default" ] [ text ("Play Move : "++toString(model.move.startLine)++","++toString(model.move.startRow)++" || "++toString(model.move.endLine)++","++toString(model.move.endRow)) ]
     , table[] (List.indexedMap viewPlate model.plate)
     ]
 
@@ -179,23 +178,7 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
   Sub.none
 
--- HTTP ----------------------------
-
--- Récupération du Statu de la party
-getPartyStatus : String -> String -> Cmd Msg
-getPartyStatus playerName team = 
-  let 
-    --url = "http://localhost:64385/"++playerName++"/"++team++"/"
-    url = "http://demo1416923.mockable.io/fonctionnelOP"
-  in
-    Http.send NewPartyStatus (Http.get url decodePartyStatus)
-
--- Decode Json qui permet de récupèrer un élement (image_url dans data) dans du JSON
-decodePartyStatus : Json.Decode.Decoder String  
-decodePartyStatus =
-  Json.Decode.at ["partyState", "Plate"] Json.Decode.string
-
--- A Supprimer
+-- HTTP ---
 getRandomGif : String -> Cmd Msg 
 getRandomGif topic =
   let
@@ -221,15 +204,20 @@ initEmptyPlayer =
 initPlayer : String -> String -> Cmd Msg
 initPlayer pseudo team =
   let 
+    --"http://demo1416923.mockable.io/listPlate2/"++pseudo++"/"++team
     url = 
       "http://demo1416923.mockable.io/listPlate2"
   in 
     Http.send InitPlayerMsg (Http.get url gameUpdateDecoder)
 
+getPlayResult : Move -> Cmd Msg
+getPlayResult move = 
+  let 
+    --url = "http://demo1416923.mockable.io/listPlate2/"++toString(move.startLine)++":"++toString(move.startRow)++":"++toString(move.endLine)++":"++toString(move.endRow)
+    url = "http://demo1416923.mockable.io/listPlate3"
+  in
+     Http.send InitPlayerMsg (Http.get url gameUpdateDecoder)
 
-caseDecoder : Json.Decode.Decoder (List(String))
-caseDecoder = 
-  Json.Decode.at ["plateau"] (Json.Decode.list Json.Decode.string)
 
 -- Premier decoder avec seulement le plateau
 plateUpdateDecoder : String -> List (List String)
@@ -257,33 +245,6 @@ playerDecode =
     |: (field "Pseudo" Json.Decode.string)
     |: (field "Tour" Json.Decode.int) 
 
-decodeEmptyString : Maybe (String) -> Decoder (String)
-decodeEmptyString maybeString =
-  Json.Decode.succeed (Maybe.withDefault "empty" maybeString)
---
-
-
--- (Col(Ligne "0" "0" "0" "0" "0" "0" "0" "0" "0")
---caseDecoder : Json.Decode.Decoder Ligne
---caseDecoder = 
---  succeed Ligne
---    |: (field "l0" string)
---    |: (field "l1" string)s
---    |: (field "l2" string)
---    |: (field "l3" string)
---    |: (field "l4" string)
---    |: (field "l5" string)
---    |: (field "l6" string)
---    |: (field "l7" string)
---    |: (field "l8" string)
---  
---colDecoder : Json.Decode.Decoder Col
---colDecoder = 
---  succeed  Col
---    |: (field "c0" caseDecoder)
---    |: (field "c1" caseDecoder)
-
-  
 
 -- En cas de double-click move, update du Model-Move 
 moveUpdate : Move -> Int -> Int -> Move -- Réussir a passer le move du model et à le modifier a travers cette fonction // TODO
