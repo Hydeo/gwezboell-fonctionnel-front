@@ -22,6 +22,9 @@ type alias Model =
   , gifUrl : String
   , partyStatus : String
   , plate :  List (List String)
+  , joueur1 : Player
+  , joueur2 : Player
+  , winner : Player
   , move : Move
   }
 
@@ -32,10 +35,22 @@ type alias Move =
     endRow : Int
   }
 
+type alias Player =
+  { couleur : String,
+    pseudo : String,
+    tour : Int
+}
+
+type alias GameStatus =
+  { plate : List(List String),
+    joueur1 : Player,
+    joueur2 : Player,
+    partieGagnee : Player
+  }
 
 init : String -> (Model, Cmd Msg)
 init topic =
-  ( Model topic "waiting.gif" "lol" generatePlate initMove -- On définit le model lors du premier chargement de la page
+  ( Model topic "waiting.gif" "lol" generatePlate initEmptyPlayer initEmptyPlayer initEmptyPlayer initMove -- On définit le model lors du premier chargement de la page
   , initPlayer "Boulet" "Blanc" -- Et on charge tout de suite un premier gif
   )
 
@@ -49,7 +64,7 @@ generatePlate =
 type Msg
   = MorePlease
   | NewGif (Result Http.Error String)
-  | InitPlayerMsg (Result Http.Error String)
+  | InitPlayerMsg (Result Http.Error GameStatus)
   | UpdateStatus
   | NewPartyStatus (Result Http.Error String)
   | CaseClick Int Int
@@ -64,14 +79,14 @@ update msg model =
       (model, getRandomGif model.topic)
 
     NewGif (Ok newUrl) ->
-      (Model model.topic newUrl model.partyStatus model.plate initMove, Cmd.none)
+      (Model model.topic newUrl model.partyStatus model.plate  model.joueur1 model.joueur2 model.winner initMove, Cmd.none)
 
     NewGif (Err _) ->
       (model, Cmd.none)
 
     -- INIT PLAYER 
     InitPlayerMsg (Ok plateUpdate) ->
-      (Model model.topic plateUpdate model.partyStatus (plateUpdateDecoder plateUpdate) initMove, Cmd.none)
+      (Model model.topic "plateUpdate.plate" model.partyStatus plateUpdate.plate plateUpdate.joueur1 plateUpdate.joueur2 plateUpdate.partieGagnee initMove, Cmd.none)
 
     InitPlayerMsg (Err _) ->
       (model, Cmd.none)
@@ -81,14 +96,14 @@ update msg model =
       (model, getPartyStatus "Conard" "blanc" )
 
     NewPartyStatus (Ok partyStatus) ->
-      (Model model.topic model.gifUrl partyStatus model.plate initMove, Cmd.none)
+      (Model model.topic model.gifUrl partyStatus model.plate model.joueur1 model.joueur2 model.winner initMove, Cmd.none)
 
     NewPartyStatus (Err _) ->
       (model, Cmd.none)
 
     -- ONCLICK 
     CaseClick indexLine indexRow ->
-      ( Model model.topic model.gifUrl model.partyStatus model.plate (moveUpdate model.move indexLine indexRow), Cmd.none)
+      ( Model model.topic model.gifUrl model.partyStatus model.plate model.joueur1 model.joueur2 model.winner (moveUpdate model.move indexLine indexRow), Cmd.none)
 
 
 -- VIEW
@@ -175,18 +190,24 @@ initMove : Move
 initMove =
  Move -1 -1 -1 -1
 
+initEmptyPlayer : Player
+initEmptyPlayer =
+ Player "Blanc" "Link" 0 
+
 initPlayer : String -> String -> Cmd Msg
 initPlayer pseudo team =
   let 
     url = 
       "http://demo1416923.mockable.io/listPlate2"
   in 
-    Http.send InitPlayerMsg (Http.getString url)
+    Http.send InitPlayerMsg (Http.get url gameUpdateDecoder)
+
 
 caseDecoder : Json.Decode.Decoder (List(String))
 caseDecoder = 
   Json.Decode.at ["plateau"] (Json.Decode.list Json.Decode.string)
 
+-- Premier decoder avec seulement le plateau
 plateUpdateDecoder : String -> List (List String)
 plateUpdateDecoder stringPlate =
   let 
@@ -195,6 +216,28 @@ plateUpdateDecoder stringPlate =
     case d of
         Ok x ->  x
         Err msg -> [[""]]
+--
+-- New Decoder avec tous les champs --
+gameUpdateDecoder : Decoder GameStatus
+gameUpdateDecoder =
+  Json.Decode.succeed GameStatus
+    |: (field "Plateau" (Json.Decode.list(Json.Decode.list Json.Decode.string)))
+    |: (field "Joueur1" playerDecode)
+    |: (field "Joueur2" playerDecode)
+    |: (field "PartieGagnee" playerDecode)
+
+playerDecode : Decoder Player
+playerDecode =
+  Json.Decode.succeed Player
+    |: (field "Couleur" Json.Decode.string)
+    |: (field "Pseudo" Json.Decode.string)
+    |: (field "Tour" Json.Decode.int) 
+
+decodeEmptyString : Maybe (String) -> Decoder (String)
+decodeEmptyString maybeString =
+  Json.Decode.succeed (Maybe.withDefault "empty" maybeString)
+--
+
 
 -- (Col(Ligne "0" "0" "0" "0" "0" "0" "0" "0" "0")
 --caseDecoder : Json.Decode.Decoder Ligne
