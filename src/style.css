@@ -9,7 +9,20 @@
 	background-image: url(../img/out.png)
 }
 
-td{
+.scores{
+	text-align:center;
+}
+
+.case{
   width:64px;
   height:64px;
+}
+
+.bigBrother{
+	text-align: center;
+}
+
+table{
+	margin-left:auto; 
+    margin-right:auto;
 }

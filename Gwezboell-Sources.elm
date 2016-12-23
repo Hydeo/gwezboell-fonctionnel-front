@@ -111,8 +111,32 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-  div []
-    [ h2 [] [text model.topic]
+  div [class "bigBrother"]
+    [ h1 [] [text "Gwezboell Fonctionnel"]
+    ,table[class "scores"][
+      tr[][
+        td[][
+          h2 [] [text "Player 1"]
+          ,h3 [] [text (model.joueur1.pseudo++" - "++model.joueur1.couleur++" - "++toString(model.joueur1.tour))]
+        ]
+        ,
+        td[class "spacer"][text "= = = = VS = = = ="]
+        ,td[][
+          h2 [] [text "Player 2"]
+          , h3 [] [text (model.joueur2.pseudo++" - "++model.joueur2.couleur++" - "++toString(model.joueur2.tour))]
+        ]
+      ],
+      tr[][
+        td[][]
+        ,td[class "spacer"][text "= = = = WINNER = = = ="]
+        ,td[][]
+      ],
+      tr[][
+        td[][]
+        ,td[class "spacer"][text model.winner.pseudo]
+        ,td[][]
+      ]
+    ]
     , button [ onClick MorePlease,  class "btn btn-default"] [ text "More Please!" ] -- Quand on clique sur le bouton, on fait appel a MorePlease qui va ré-effectuer la même procédure que NewGif
     , br [] []
     , img [src model.gifUrl] []
@@ -132,21 +156,21 @@ viewCase : Int -> Int -> String -> Html Msg
 viewCase indexRow indexLine piece  =
   if ((indexRow == 0 || indexRow == 8) && (indexLine == 0 || indexLine == 8)) then
     if (piece /= "Null") then
-      td[id ((toString indexRow)++(toString indexLine)), class "corner", onClick (CaseClick indexRow indexLine)]
+      td[id ((toString indexRow)++(toString indexLine)), class "corner case", onClick (CaseClick indexRow indexLine)]
       [
         img [src ("img/"++piece++".png")][]
       ]
     else
-      td[id ((toString indexRow)++(toString indexLine)), class "corner", onClick (CaseClick indexRow indexLine)]
+      td[id ((toString indexRow)++(toString indexLine)), class "corner case", onClick (CaseClick indexRow indexLine)]
       []
   else
     if (piece /= "Null") then
-      td[id ((toString indexRow)++(toString indexLine)), class "floor", onClick (CaseClick indexRow indexLine)]
+      td[id ((toString indexRow)++(toString indexLine)), class "floor case", onClick (CaseClick indexRow indexLine)]
       [
         img [src ("img/"++piece++".png")][]
       ]
     else
-      td[id ((toString indexRow)++(toString indexLine)), class "floor", onClick (CaseClick indexRow indexLine)]
+      td[id ((toString indexRow)++(toString indexLine)), class "floor case", onClick (CaseClick indexRow indexLine)]
       []
   
 -- SUBSCRIPTIONS --------------------
