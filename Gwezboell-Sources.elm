@@ -47,6 +47,8 @@ type alias GameStatus =
     partieGagnee : Player
   }
 
+
+
 init : String -> (Model, Cmd Msg)
 init topic =
   ( Model topic "waiting.gif" generatePlate initEmptyPlayer initEmptyPlayer initEmptyPlayer initMove -- On définit le model lors du premier chargement de la page
@@ -55,7 +57,7 @@ init topic =
 
 generatePlate : List (List String)
 generatePlate = 
-  [["Null","Null","Null","PionN","PionN","PionN","Null","Null","Null"],["Null","Null","Null","Null","PionN","Null","Null","Null","Null"],["Null","Null","Null","Null","PionB","Null","Null","Null","Null"],["PionN","Null","Null","Null","PionB","Null","Null","Null","PionN"],["PionN","PionN","PionB","PionB","RoiB","PionB","PionB","PionN","PionN"],["PionN","Null","Null","Null","PionB","Null","Null","Null","PionN"],["Null","Null","Null","Null","PionB","Null","Null","Null","Null"],["Null","Null","Null","Null","PionN","Null","Null","Null","Null"],["Null","Null","Null","PionN","PionN","PionN","Null","Null","Null"]]
+  [["Null","Null","Null","PionN","Null","PionN","Null","Null","Null"],["Null","Null","Null","Null","PionN","Null","Null","Null","Null"],["Null","Null","Null","Null","PionB","Null","Null","Null","Null"],["PionN","Null","Null","Null","PionB","Null","Null","Null","PionN"],["PionN","PionN","PionB","PionB","RoiB","PionB","PionB","PionN","PionN"],["PionN","Null","Null","Null","PionB","Null","Null","Null","PionN"],["Null","Null","Null","Null","PionB","Null","Null","Null","Null"],["Null","Null","Null","Null","PionN","Null","Null","Null","Null"],["Null","Null","Null","PionN","PionN","PionN","Null","Null","Null"]]
 
 -- UPDATE
 
@@ -93,7 +95,7 @@ update msg model =
 
     -- PLAYER Play 
     PlayTurn ->
-      (model, getPlayResult model.move)
+      (model, (getPlayResult model model.move))
 
     NewPartyStatus (Ok partyStatus) ->
       (Model model.topic model.gifUrl  model.plate model.joueur1 model.joueur2 model.winner initMove, Cmd.none)
@@ -205,16 +207,19 @@ initPlayer : String -> String -> Cmd Msg
 initPlayer pseudo team =
   let 
     --"http://demo1416923.mockable.io/listPlate2/"++pseudo++"/"++team
+    --"http://demo1416923.mockable.io/listPlate2"
     url = 
-      "http://demo1416923.mockable.io/listPlate2"
+      "http://localhost:64385/Boulet/Noir/"
   in 
     Http.send InitPlayerMsg (Http.get url gameUpdateDecoder)
 
-getPlayResult : Move -> Cmd Msg
-getPlayResult move = 
+
+getPlayResult : Model -> Move -> Cmd Msg
+getPlayResult model move = 
   let 
     --url = "http://demo1416923.mockable.io/listPlate2/"++toString(move.startLine)++":"++toString(move.startRow)++":"++toString(move.endLine)++":"++toString(move.endRow)
-    url = "http://demo1416923.mockable.io/listPlate3"
+    --"http://demo1416923.mockable.io/listPlate3"
+    url = "http://localhost:64385/"++ model.joueur2.pseudo++"/"++model.joueur2.couleur++"/"++toString(move.startRow+1)++":"++toString(move.startLine+1)++":"++toString(move.endRow+1)++":"++toString(move.endLine+1)
   in
      Http.send InitPlayerMsg (Http.get url gameUpdateDecoder)
 

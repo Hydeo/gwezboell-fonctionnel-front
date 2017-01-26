@@ -9325,8 +9325,11 @@ var _elm_lang$http$Http$stringPart = _elm_lang$http$Http$StringPart;
 var _user$project$Main$plateUpdateDecoder = function (stringPlate) {
 	var d = A2(
 		_elm_lang$core$Json_Decode$decodeString,
-		_elm_lang$core$Json_Decode$list(
-			_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$string)),
+		A2(
+			_elm_lang$core$Json_Decode$field,
+			'Plateau',
+			_elm_lang$core$Json_Decode$list(
+				_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$string))),
 		stringPlate);
 	var _p0 = d;
 	if (_p0.ctor === 'Ok') {
@@ -9343,14 +9346,23 @@ var _user$project$Main$plateUpdateDecoder = function (stringPlate) {
 		};
 	}
 };
-var _user$project$Main$caseDecoder = A2(
-	_elm_lang$core$Json_Decode$at,
-	{
+var _user$project$Main$corsPost = {
+	verb: 'POST',
+	headers: {
 		ctor: '::',
-		_0: 'plate',
-		_1: {ctor: '[]'}
+		_0: {ctor: '_Tuple2', _0: 'Origin', _1: 'http://elm-lang.org'},
+		_1: {
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: 'Access-Control-Request-Method', _1: 'POST'},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: 'Access-Control-Request-Headers', _1: 'X-Custom-Header'},
+				_1: {ctor: '[]'}
+			}
+		}
 	},
-	_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$string));
+	url: 'http://localhost:64385/Boulet/Noir/'
+};
 var _user$project$Main$decodeGifUrl = A2(
 	_elm_lang$core$Json_Decode$at,
 	{
@@ -9359,18 +9371,6 @@ var _user$project$Main$decodeGifUrl = A2(
 		_1: {
 			ctor: '::',
 			_0: 'image_url',
-			_1: {ctor: '[]'}
-		}
-	},
-	_elm_lang$core$Json_Decode$string);
-var _user$project$Main$decodePartyStatus = A2(
-	_elm_lang$core$Json_Decode$at,
-	{
-		ctor: '::',
-		_0: 'partyState',
-		_1: {
-			ctor: '::',
-			_0: 'Plate',
 			_1: {ctor: '[]'}
 		}
 	},
@@ -9394,7 +9394,7 @@ var _user$project$Main$generatePlate = {
 					_0: 'PionN',
 					_1: {
 						ctor: '::',
-						_0: 'PionN',
+						_0: 'Null',
 						_1: {
 							ctor: '::',
 							_0: 'PionN',
@@ -9739,9 +9739,9 @@ var _user$project$Main$generatePlate = {
 		}
 	}
 };
-var _user$project$Main$Model = F5(
-	function (a, b, c, d, e) {
-		return {topic: a, gifUrl: b, partyStatus: c, plate: d, move: e};
+var _user$project$Main$Model = F7(
+	function (a, b, c, d, e, f, g) {
+		return {topic: a, gifUrl: b, plate: c, joueur1: d, joueur2: e, winner: f, move: g};
 	});
 var _user$project$Main$Move = F4(
 	function (a, b, c, d) {
@@ -9751,6 +9751,46 @@ var _user$project$Main$initMove = A4(_user$project$Main$Move, -1, -1, -1, -1);
 var _user$project$Main$moveUpdate = F3(
 	function (move, indexLine, indexRow) {
 		return (_elm_lang$core$Native_Utils.eq(move.startLine, -1) && _elm_lang$core$Native_Utils.eq(move.startRow, -1)) ? A4(_user$project$Main$Move, indexLine, indexRow, move.endLine, move.endRow) : ((_elm_lang$core$Native_Utils.eq(move.endLine, -1) && _elm_lang$core$Native_Utils.eq(move.endRow, -1)) ? A4(_user$project$Main$Move, move.startLine, move.startRow, indexLine, indexRow) : A4(_user$project$Main$Move, indexLine, indexRow, -1, -1));
+	});
+var _user$project$Main$Player = F3(
+	function (a, b, c) {
+		return {couleur: a, pseudo: b, tour: c};
+	});
+var _user$project$Main$initEmptyPlayer = A3(_user$project$Main$Player, 'Blanc', 'Link', 0);
+var _user$project$Main$playerDecode = A2(
+	_elm_community$json_extra$Json_Decode_Extra_ops['|:'],
+	A2(
+		_elm_community$json_extra$Json_Decode_Extra_ops['|:'],
+		A2(
+			_elm_community$json_extra$Json_Decode_Extra_ops['|:'],
+			_elm_lang$core$Json_Decode$succeed(_user$project$Main$Player),
+			A2(_elm_lang$core$Json_Decode$field, 'Couleur', _elm_lang$core$Json_Decode$string)),
+		A2(_elm_lang$core$Json_Decode$field, 'Pseudo', _elm_lang$core$Json_Decode$string)),
+	A2(_elm_lang$core$Json_Decode$field, 'Tour', _elm_lang$core$Json_Decode$int));
+var _user$project$Main$GameStatus = F4(
+	function (a, b, c, d) {
+		return {plate: a, joueur1: b, joueur2: c, partieGagnee: d};
+	});
+var _user$project$Main$gameUpdateDecoder = A2(
+	_elm_community$json_extra$Json_Decode_Extra_ops['|:'],
+	A2(
+		_elm_community$json_extra$Json_Decode_Extra_ops['|:'],
+		A2(
+			_elm_community$json_extra$Json_Decode_Extra_ops['|:'],
+			A2(
+				_elm_community$json_extra$Json_Decode_Extra_ops['|:'],
+				_elm_lang$core$Json_Decode$succeed(_user$project$Main$GameStatus),
+				A2(
+					_elm_lang$core$Json_Decode$field,
+					'Plateau',
+					_elm_lang$core$Json_Decode$list(
+						_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$string)))),
+			A2(_elm_lang$core$Json_Decode$field, 'Joueur1', _user$project$Main$playerDecode)),
+		A2(_elm_lang$core$Json_Decode$field, 'Joueur2', _user$project$Main$playerDecode)),
+	A2(_elm_lang$core$Json_Decode$field, 'PartieGagnee', _user$project$Main$playerDecode));
+var _user$project$Main$Request = F3(
+	function (a, b, c) {
+		return {verb: a, headers: b, url: c};
 	});
 var _user$project$Main$CaseClick = F2(
 	function (a, b) {
@@ -9769,7 +9809,7 @@ var _user$project$Main$viewCase = F3(
 						_elm_lang$core$Basics$toString(indexLine))),
 				_1: {
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('corner'),
+					_0: _elm_lang$html$Html_Attributes$class('corner case'),
 					_1: {
 						ctor: '::',
 						_0: _elm_lang$html$Html_Events$onClick(
@@ -9804,7 +9844,7 @@ var _user$project$Main$viewCase = F3(
 						_elm_lang$core$Basics$toString(indexLine))),
 				_1: {
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('corner'),
+					_0: _elm_lang$html$Html_Attributes$class('corner case'),
 					_1: {
 						ctor: '::',
 						_0: _elm_lang$html$Html_Events$onClick(
@@ -9824,7 +9864,7 @@ var _user$project$Main$viewCase = F3(
 						_elm_lang$core$Basics$toString(indexLine))),
 				_1: {
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('floor'),
+					_0: _elm_lang$html$Html_Attributes$class('floor case'),
 					_1: {
 						ctor: '::',
 						_0: _elm_lang$html$Html_Events$onClick(
@@ -9859,7 +9899,7 @@ var _user$project$Main$viewCase = F3(
 						_elm_lang$core$Basics$toString(indexLine))),
 				_1: {
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('floor'),
+					_0: _elm_lang$html$Html_Attributes$class('floor case'),
 					_1: {
 						ctor: '::',
 						_0: _elm_lang$html$Html_Events$onClick(
@@ -9888,33 +9928,66 @@ var _user$project$Main$viewPlate = F2(
 var _user$project$Main$NewPartyStatus = function (a) {
 	return {ctor: 'NewPartyStatus', _0: a};
 };
-var _user$project$Main$getPartyStatus = F2(
-	function (playerName, team) {
-		var url = 'http://demo1416923.mockable.io/fonctionnelOP';
-		return A2(
-			_elm_lang$http$Http$send,
-			_user$project$Main$NewPartyStatus,
-			A2(_elm_lang$http$Http$get, url, _user$project$Main$decodePartyStatus));
-	});
-var _user$project$Main$UpdateStatus = {ctor: 'UpdateStatus'};
+var _user$project$Main$PlayTurn = {ctor: 'PlayTurn'};
 var _user$project$Main$InitPlayerMsg = function (a) {
 	return {ctor: 'InitPlayerMsg', _0: a};
 };
 var _user$project$Main$initPlayer = F2(
 	function (pseudo, team) {
-		var url = 'http://demo1416923.mockable.io/listPlate';
+		var url = 'http://localhost:64385/Boulet/Noir/';
 		return A2(
 			_elm_lang$http$Http$send,
 			_user$project$Main$InitPlayerMsg,
-			_elm_lang$http$Http$getString(url));
+			A2(_elm_lang$http$Http$get, url, _user$project$Main$gameUpdateDecoder));
 	});
 var _user$project$Main$init = function (topic) {
 	return {
 		ctor: '_Tuple2',
-		_0: A5(_user$project$Main$Model, topic, 'waiting.gif', 'lol', _user$project$Main$generatePlate, _user$project$Main$initMove),
+		_0: A7(_user$project$Main$Model, topic, 'waiting.gif', _user$project$Main$generatePlate, _user$project$Main$initEmptyPlayer, _user$project$Main$initEmptyPlayer, _user$project$Main$initEmptyPlayer, _user$project$Main$initMove),
 		_1: A2(_user$project$Main$initPlayer, 'Boulet', 'Blanc')
 	};
 };
+var _user$project$Main$getPlayResult = F2(
+	function (model, move) {
+		var url = A2(
+			_elm_lang$core$Basics_ops['++'],
+			'http://localhost:64385/',
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				model.joueur2.pseudo,
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					'/',
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						model.joueur2.couleur,
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							'/',
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								_elm_lang$core$Basics$toString(move.startRow + 1),
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									':',
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										_elm_lang$core$Basics$toString(move.startLine + 1),
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											':',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(move.endRow + 1),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													':',
+													_elm_lang$core$Basics$toString(move.endLine + 1))))))))))));
+		return A2(
+			_elm_lang$http$Http$send,
+			_user$project$Main$InitPlayerMsg,
+			A2(_elm_lang$http$Http$get, url, _user$project$Main$gameUpdateDecoder));
+	});
 var _user$project$Main$NewGif = function (a) {
 	return {ctor: 'NewGif', _0: a};
 };
@@ -9939,7 +10012,7 @@ var _user$project$Main$update = F2(
 				if (_p1._0.ctor === 'Ok') {
 					return {
 						ctor: '_Tuple2',
-						_0: A5(_user$project$Main$Model, model.topic, _p1._0._0, model.partyStatus, model.plate, _user$project$Main$initMove),
+						_0: A7(_user$project$Main$Model, model.topic, _p1._0._0, model.plate, model.joueur1, model.joueur2, model.winner, _user$project$Main$initMove),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
@@ -9947,31 +10020,26 @@ var _user$project$Main$update = F2(
 				}
 			case 'InitPlayerMsg':
 				if (_p1._0.ctor === 'Ok') {
+					var _p2 = _p1._0._0;
 					return {
 						ctor: '_Tuple2',
-						_0: A5(
-							_user$project$Main$Model,
-							model.topic,
-							model.gifUrl,
-							model.partyStatus,
-							_user$project$Main$plateUpdateDecoder(_p1._0._0),
-							_user$project$Main$initMove),
+						_0: A7(_user$project$Main$Model, model.topic, model.gifUrl, _p2.plate, _p2.joueur1, _p2.joueur2, _p2.partieGagnee, _user$project$Main$initMove),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
-			case 'UpdateStatus':
+			case 'PlayTurn':
 				return {
 					ctor: '_Tuple2',
 					_0: model,
-					_1: A2(_user$project$Main$getPartyStatus, 'Conard', 'blanc')
+					_1: A2(_user$project$Main$getPlayResult, model, model.move)
 				};
 			case 'NewPartyStatus':
 				if (_p1._0.ctor === 'Ok') {
 					return {
 						ctor: '_Tuple2',
-						_0: A5(_user$project$Main$Model, model.topic, model.gifUrl, _p1._0._0, model.plate, _user$project$Main$initMove),
+						_0: A7(_user$project$Main$Model, model.topic, model.gifUrl, model.plate, model.joueur1, model.joueur2, model.winner, _user$project$Main$initMove),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
@@ -9980,12 +10048,14 @@ var _user$project$Main$update = F2(
 			default:
 				return {
 					ctor: '_Tuple2',
-					_0: A5(
+					_0: A7(
 						_user$project$Main$Model,
 						model.topic,
 						model.gifUrl,
-						model.partyStatus,
 						model.plate,
+						model.joueur1,
+						model.joueur2,
+						model.winner,
 						A3(_user$project$Main$moveUpdate, model.move, _p1._0, _p1._1)),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -9995,83 +10065,287 @@ var _user$project$Main$MorePlease = {ctor: 'MorePlease'};
 var _user$project$Main$view = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
-		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('bigBrother'),
+			_1: {ctor: '[]'}
+		},
 		{
 			ctor: '::',
 			_0: A2(
-				_elm_lang$html$Html$h2,
+				_elm_lang$html$Html$h1,
 				{ctor: '[]'},
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html$text(model.topic),
+					_0: _elm_lang$html$Html$text('Gwezboell Fonctionnel'),
 					_1: {ctor: '[]'}
 				}),
 			_1: {
 				ctor: '::',
 				_0: A2(
-					_elm_lang$html$Html$button,
+					_elm_lang$html$Html$table,
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$MorePlease),
-						_1: {
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('btn btn-default'),
-							_1: {ctor: '[]'}
-						}
+						_0: _elm_lang$html$Html_Attributes$class('scores'),
+						_1: {ctor: '[]'}
 					},
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html$text('More Please!'),
-						_1: {ctor: '[]'}
-					}),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$br,
-						{ctor: '[]'},
-						{ctor: '[]'}),
-					_1: {
-						ctor: '::',
 						_0: A2(
-							_elm_lang$html$Html$img,
+							_elm_lang$html$Html$tr,
+							{ctor: '[]'},
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$src(model.gifUrl),
-								_1: {ctor: '[]'}
-							},
-							{ctor: '[]'}),
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_elm_lang$html$Html$br,
-								{ctor: '[]'},
-								{ctor: '[]'}),
-							_1: {
-								ctor: '::',
 								_0: A2(
-									_elm_lang$html$Html$button,
+									_elm_lang$html$Html$td,
+									{ctor: '[]'},
 									{
 										ctor: '::',
-										_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$UpdateStatus),
+										_0: A2(
+											_elm_lang$html$Html$h2,
+											{ctor: '[]'},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text('Player 1'),
+												_1: {ctor: '[]'}
+											}),
 										_1: {
 											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$class('btn btn-default'),
+											_0: A2(
+												_elm_lang$html$Html$h3,
+												{ctor: '[]'},
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html$text(
+														A2(
+															_elm_lang$core$Basics_ops['++'],
+															model.joueur1.pseudo,
+															A2(
+																_elm_lang$core$Basics_ops['++'],
+																' - ',
+																A2(
+																	_elm_lang$core$Basics_ops['++'],
+																	model.joueur1.couleur,
+																	A2(
+																		_elm_lang$core$Basics_ops['++'],
+																		' - ',
+																		_elm_lang$core$Basics$toString(model.joueur1.tour)))))),
+													_1: {ctor: '[]'}
+												}),
 											_1: {ctor: '[]'}
 										}
-									},
-									{
-										ctor: '::',
-										_0: _elm_lang$html$Html$text('Get Status'),
-										_1: {ctor: '[]'}
 									}),
 								_1: {
 									ctor: '::',
 									_0: A2(
-										_elm_lang$html$Html$p,
-										{ctor: '[]'},
+										_elm_lang$html$Html$td,
 										{
 											ctor: '::',
-											_0: _elm_lang$html$Html$text(model.partyStatus),
+											_0: _elm_lang$html$Html_Attributes$class('spacer'),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('= = = = VS = = = ='),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$td,
+											{ctor: '[]'},
+											{
+												ctor: '::',
+												_0: A2(
+													_elm_lang$html$Html$h2,
+													{ctor: '[]'},
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html$text('Player 2'),
+														_1: {ctor: '[]'}
+													}),
+												_1: {
+													ctor: '::',
+													_0: A2(
+														_elm_lang$html$Html$h3,
+														{ctor: '[]'},
+														{
+															ctor: '::',
+															_0: _elm_lang$html$Html$text(
+																A2(
+																	_elm_lang$core$Basics_ops['++'],
+																	model.joueur2.pseudo,
+																	A2(
+																		_elm_lang$core$Basics_ops['++'],
+																		' - ',
+																		A2(
+																			_elm_lang$core$Basics_ops['++'],
+																			model.joueur2.couleur,
+																			A2(
+																				_elm_lang$core$Basics_ops['++'],
+																				' - ',
+																				_elm_lang$core$Basics$toString(model.joueur2.tour)))))),
+															_1: {ctor: '[]'}
+														}),
+													_1: {ctor: '[]'}
+												}
+											}),
+										_1: {ctor: '[]'}
+									}
+								}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$tr,
+								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$td,
+										{ctor: '[]'},
+										{ctor: '[]'}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$td,
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$class('spacer'),
+												_1: {ctor: '[]'}
+											},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text('= = = = WINNER = = = ='),
+												_1: {ctor: '[]'}
+											}),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_elm_lang$html$Html$td,
+												{ctor: '[]'},
+												{ctor: '[]'}),
+											_1: {ctor: '[]'}
+										}
+									}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$tr,
+									{ctor: '[]'},
+									{
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$td,
+											{ctor: '[]'},
+											{ctor: '[]'}),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_elm_lang$html$Html$td,
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$class('spacer'),
+													_1: {ctor: '[]'}
+												},
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html$text(model.winner.pseudo),
+													_1: {ctor: '[]'}
+												}),
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_elm_lang$html$Html$td,
+													{ctor: '[]'},
+													{ctor: '[]'}),
+												_1: {ctor: '[]'}
+											}
+										}
+									}),
+								_1: {ctor: '[]'}
+							}
+						}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$button,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$MorePlease),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$class('btn btn-default'),
+								_1: {ctor: '[]'}
+							}
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('More Please!'),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$br,
+							{ctor: '[]'},
+							{ctor: '[]'}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$img,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$src(model.gifUrl),
+									_1: {ctor: '[]'}
+								},
+								{ctor: '[]'}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$br,
+									{ctor: '[]'},
+									{ctor: '[]'}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$button,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$PlayTurn),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$class('btn btn-default'),
+												_1: {ctor: '[]'}
+											}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text(
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													'Play Move : ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(model.move.startLine),
+														A2(
+															_elm_lang$core$Basics_ops['++'],
+															',',
+															A2(
+																_elm_lang$core$Basics_ops['++'],
+																_elm_lang$core$Basics$toString(model.move.startRow),
+																A2(
+																	_elm_lang$core$Basics_ops['++'],
+																	' || ',
+																	A2(
+																		_elm_lang$core$Basics_ops['++'],
+																		_elm_lang$core$Basics$toString(model.move.endLine),
+																		A2(
+																			_elm_lang$core$Basics_ops['++'],
+																			',',
+																			_elm_lang$core$Basics$toString(model.move.endRow))))))))),
 											_1: {ctor: '[]'}
 										}),
 									_1: {
