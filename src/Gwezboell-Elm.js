@@ -9913,7 +9913,7 @@ var _user$project$Main$InitPlayerMsg = function (a) {
 };
 var _user$project$Main$initPlayer = F2(
 	function (pseudo, team) {
-		var url = 'http://localhost:8080/Boulet/Noir/';
+		var url = 'http://localhost:8080/Joueur2/Noir/';
 		return A2(
 			_elm_lang$http$Http$send,
 			_user$project$Main$InitPlayerMsg,

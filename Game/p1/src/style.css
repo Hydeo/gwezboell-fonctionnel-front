@@ -1,0 +1,39 @@
+body{
+	background-image: url("../img/bg.jpg");
+	background-size:     cover;                     
+    background-repeat:   no-repeat;
+    background-position: center center;
+}
+
+h1{
+	    background-color: red;
+}
+.floor{
+	background-size: 100% 100%;
+	/*background-color: green;*/
+	background-image: url(../img/grass3.png)
+}
+
+.corner{
+	background-size: 100% 100%;
+	background-image: url(../img/out.png)
+}
+
+.scores{
+	text-align:center;
+    background-color: whitesmoke;
+}
+
+.case{
+  width:64px;
+  height:64px;
+}
+
+.bigBrother{
+	text-align: center;
+}
+
+table{
+	margin-left:auto; 
+    margin-right:auto;
+}

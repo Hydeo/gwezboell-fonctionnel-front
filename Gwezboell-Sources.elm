@@ -209,7 +209,7 @@ initPlayer pseudo team =
     --"http://demo1416923.mockable.io/listPlate2/"++pseudo++"/"++team
     --"http://demo1416923.mockable.io/listPlate2"
     url = 
-      "http://localhost:8080/Boulet/Noir/"
+      "http://localhost:8080/Joueur2/Noir/"
   in 
     Http.send InitPlayerMsg (Http.get url gameUpdateDecoder)
 
