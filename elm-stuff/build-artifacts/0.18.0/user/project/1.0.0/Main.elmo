@@ -22,23 +22,6 @@ var _user$project$Main$plateUpdateDecoder = function (stringPlate) {
 		};
 	}
 };
-var _user$project$Main$corsPost = {
-	verb: 'POST',
-	headers: {
-		ctor: '::',
-		_0: {ctor: '_Tuple2', _0: 'Origin', _1: 'http://elm-lang.org'},
-		_1: {
-			ctor: '::',
-			_0: {ctor: '_Tuple2', _0: 'Access-Control-Request-Method', _1: 'POST'},
-			_1: {
-				ctor: '::',
-				_0: {ctor: '_Tuple2', _0: 'Access-Control-Request-Headers', _1: 'X-Custom-Header'},
-				_1: {ctor: '[]'}
-			}
-		}
-	},
-	url: 'http://localhost:64385/Boulet/Noir/'
-};
 var _user$project$Main$decodeGifUrl = A2(
 	_elm_lang$core$Json_Decode$at,
 	{
@@ -464,10 +447,6 @@ var _user$project$Main$gameUpdateDecoder = A2(
 			A2(_elm_lang$core$Json_Decode$field, 'Joueur1', _user$project$Main$playerDecode)),
 		A2(_elm_lang$core$Json_Decode$field, 'Joueur2', _user$project$Main$playerDecode)),
 	A2(_elm_lang$core$Json_Decode$field, 'PartieGagnee', _user$project$Main$playerDecode));
-var _user$project$Main$Request = F3(
-	function (a, b, c) {
-		return {verb: a, headers: b, url: c};
-	});
 var _user$project$Main$CaseClick = F2(
 	function (a, b) {
 		return {ctor: 'CaseClick', _0: a, _1: b};
@@ -610,7 +589,7 @@ var _user$project$Main$InitPlayerMsg = function (a) {
 };
 var _user$project$Main$initPlayer = F2(
 	function (pseudo, team) {
-		var url = 'http://localhost:64385/Boulet/Noir/';
+		var url = 'http://localhost:8080/Boulet/Noir/';
 		return A2(
 			_elm_lang$http$Http$send,
 			_user$project$Main$InitPlayerMsg,
@@ -627,7 +606,7 @@ var _user$project$Main$getPlayResult = F2(
 	function (model, move) {
 		var url = A2(
 			_elm_lang$core$Basics_ops['++'],
-			'http://localhost:64385/',
+			'http://localhost:8080/',
 			A2(
 				_elm_lang$core$Basics_ops['++'],
 				model.joueur2.pseudo,
@@ -642,23 +621,23 @@ var _user$project$Main$getPlayResult = F2(
 							'/',
 							A2(
 								_elm_lang$core$Basics_ops['++'],
-								_elm_lang$core$Basics$toString(move.startRow + 1),
+								_elm_lang$core$Basics$toString(move.startLine + 1),
 								A2(
 									_elm_lang$core$Basics_ops['++'],
 									':',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(move.startLine + 1),
+										_elm_lang$core$Basics$toString(move.startRow + 1),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											':',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(move.endRow + 1),
+												_elm_lang$core$Basics$toString(move.endLine + 1),
 												A2(
 													_elm_lang$core$Basics_ops['++'],
 													':',
-													_elm_lang$core$Basics$toString(move.endLine + 1))))))))))));
+													_elm_lang$core$Basics$toString(move.endRow + 1))))))))))));
 		return A2(
 			_elm_lang$http$Http$send,
 			_user$project$Main$InitPlayerMsg,
@@ -1005,23 +984,23 @@ var _user$project$Main$view = function (model) {
 													'Play Move : ',
 													A2(
 														_elm_lang$core$Basics_ops['++'],
-														_elm_lang$core$Basics$toString(model.move.startLine),
+														_elm_lang$core$Basics$toString(model.move.startLine + 1),
 														A2(
 															_elm_lang$core$Basics_ops['++'],
 															',',
 															A2(
 																_elm_lang$core$Basics_ops['++'],
-																_elm_lang$core$Basics$toString(model.move.startRow),
+																_elm_lang$core$Basics$toString(model.move.startRow + 1),
 																A2(
 																	_elm_lang$core$Basics_ops['++'],
 																	' || ',
 																	A2(
 																		_elm_lang$core$Basics_ops['++'],
-																		_elm_lang$core$Basics$toString(model.move.endLine),
+																		_elm_lang$core$Basics$toString(model.move.endLine + 1),
 																		A2(
 																			_elm_lang$core$Basics_ops['++'],
 																			',',
-																			_elm_lang$core$Basics$toString(model.move.endRow))))))))),
+																			_elm_lang$core$Basics$toString(model.move.endRow + 1))))))))),
 											_1: {ctor: '[]'}
 										}),
 									_1: {

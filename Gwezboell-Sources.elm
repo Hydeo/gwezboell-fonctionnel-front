@@ -143,7 +143,7 @@ view model =
     , br [] []
     , img [src model.gifUrl] []
     , br [] []
-    , button [ onClick PlayTurn,  class "btn btn-default" ] [ text ("Play Move : "++toString(model.move.startLine)++","++toString(model.move.startRow)++" || "++toString(model.move.endLine)++","++toString(model.move.endRow)) ]
+    , button [ onClick PlayTurn,  class "btn btn-default" ] [ text ("Play Move : "++toString(model.move.startLine+1)++","++toString(model.move.startRow+1)++" || "++toString(model.move.endLine+1)++","++toString(model.move.endRow+1)) ]
     , table[] (List.indexedMap viewPlate model.plate)
     ]
 
@@ -209,7 +209,7 @@ initPlayer pseudo team =
     --"http://demo1416923.mockable.io/listPlate2/"++pseudo++"/"++team
     --"http://demo1416923.mockable.io/listPlate2"
     url = 
-      "http://localhost:64385/Boulet/Noir/"
+      "http://localhost:8080/Boulet/Noir/"
   in 
     Http.send InitPlayerMsg (Http.get url gameUpdateDecoder)
 
@@ -219,7 +219,7 @@ getPlayResult model move =
   let 
     --url = "http://demo1416923.mockable.io/listPlate2/"++toString(move.startLine)++":"++toString(move.startRow)++":"++toString(move.endLine)++":"++toString(move.endRow)
     --"http://demo1416923.mockable.io/listPlate3"
-    url = "http://localhost:64385/"++ model.joueur2.pseudo++"/"++model.joueur2.couleur++"/"++toString(move.startRow+1)++":"++toString(move.startLine+1)++":"++toString(move.endRow+1)++":"++toString(move.endLine+1)
+    url = "http://localhost:8080/"++ model.joueur2.pseudo++"/"++model.joueur2.couleur++"/"++toString(move.startLine+1)++":"++toString(move.startRow+1)++":"++toString(move.endLine+1)++":"++toString(move.endRow+1)
   in
      Http.send InitPlayerMsg (Http.get url gameUpdateDecoder)
 
